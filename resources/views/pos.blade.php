@@ -134,20 +134,20 @@
 
                 <!-- Backdrop -->
                 <div x-show="isPaymentModalOpen"
-                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter="transition-opacity ease-out duration-200"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave="transition-opacity ease-in duration-150"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
-                    class="absolute inset-0 bg-black/40 backdrop-blur-sm" @click="isPaymentModalOpen = false"></div>
+                    class="absolute inset-0 bg-black/40 backdrop-blur-sm will-change-opacity" @click="isPaymentModalOpen = false"></div>
 
                 <!-- Modal Card -->
                 <div x-show="isPaymentModalOpen"
-                    x-transition:enter="transition duration-[280ms] ease-[cubic-bezier(0.32,0.72,0,1)] transform-origin-top-right" 
+                    x-transition:enter="transition-[opacity,transform] duration-[280ms] ease-[cubic-bezier(0.32,0.72,0,1)] transform-origin-top-right" 
                     x-transition:enter-start="opacity-0 scale-[0.92] -translate-y-2"
                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-                    x-transition:leave="transition duration-[200ms] ease-in transform-origin-top-right"
+                    x-transition:leave="transition-[opacity,transform] duration-[200ms] ease-in transform-origin-top-right"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-[0.92] -translate-y-2"
                     class="relative z-10 w-full max-w-[460px] rounded-[28px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.15)] border border-white/10 flex flex-col">
