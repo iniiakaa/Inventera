@@ -56,5 +56,61 @@ class DatabaseSeeder extends Seeder
             'role'       => 'cashier',
             'branch_id'  => $jakartaBranch->id,
         ]);
+
+        // Akun Supervisor Cabang Jakarta
+        User::create([
+            'name'       => 'Supervisor Santi',
+            'email'      => 'supervisor.jakarta@jayusman.id',
+            'password'   => bcrypt('password'),
+            'role'       => 'supervisor',
+            'branch_id'  => $jakartaBranch->id,
+        ]);
+
+        // Akun Staff Gudang Cabang Jakarta
+        User::create([
+            'name'       => 'Gudang Anto',
+            'email'      => 'warehouse.jakarta@jayusman.id',
+            'password'   => bcrypt('password'),
+            'role'       => 'warehouse',
+            'branch_id'  => $jakartaBranch->id,
+        ]);
+
+        // Dummy Kategori
+        $kategoriMakanan = \App\Models\Category::create(['name' => 'Makanan Ringan', 'slug' => 'makanan-ringan']);
+        $kategoriMinuman = \App\Models\Category::create(['name' => 'Minuman', 'slug' => 'minuman']);
+
+        // Dummy Produk
+        $produk1 = \App\Models\Product::create([
+            'category_id' => $kategoriMakanan->id,
+            'name' => 'Keripik Kentang Yummy',
+            'sku' => 'KRY-001',
+            'cost_price' => 5000,
+            'selling_price' => 7500,
+            'barcode' => '8991234567890'
+        ]);
+
+        $produk2 = \App\Models\Product::create([
+            'category_id' => $kategoriMinuman->id,
+            'name' => 'Air Mineral Segar 600ml',
+            'sku' => 'AMS-600',
+            'cost_price' => 2000,
+            'selling_price' => 3500,
+            'barcode' => '8990987654321'
+        ]);
+
+        // Dummy Inventory untuk Jakarta
+        \App\Models\Inventory::create([
+            'branch_id' => $jakartaBranch->id,
+            'product_id' => $produk1->id,
+            'quantity' => 150,
+            'reorder_level' => 20
+        ]);
+
+        \App\Models\Inventory::create([
+            'branch_id' => $jakartaBranch->id,
+            'product_id' => $produk2->id,
+            'quantity' => 300,
+            'reorder_level' => 50
+        ]);
     }
 }
