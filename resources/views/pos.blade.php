@@ -174,17 +174,7 @@
 
     <!-- Inject Data Inventori ke Javascript -->
     <script>
-        const INVENTORY_DATA = @json($inventories->map(function($inv) {
-            return [
-                'inventory_id' => $inv->id,
-                'product_id' => $inv->product_id,
-                'category_id' => $inv->product->category_id,
-                'name' => $inv->product->name,
-                'sku' => $inv->product->sku,
-                'price' => $inv->product->selling_price,
-                'stock' => $inv->stock
-            ];
-        }));
+        const INVENTORY_DATA = @json($inventoryData);
 
         function posCart() {
             return {
