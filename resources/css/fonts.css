@@ -1,19 +1,11 @@
 /* ═══════════════════════════════════════════
    Local Fonts — Zero Network Latency
-   Font file disimpan di public/fonts/
+   Inter via @fontsource-variable/inter (npm)
+   Material Symbols via public/fonts/
    ═══════════════════════════════════════════ */
 
-/* Inter — Variable Weight (400–900) */
-@font-face {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400 900;
-    font-display: swap;
-    src: url('/fonts/inter/inter-latin.woff2') format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
-        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
-        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+/* Inter Variable Font (semua weight 100-900 dalam 1 file) */
+@import '@fontsource-variable/inter';
 
 /* Material Symbols Outlined */
 @font-face {
