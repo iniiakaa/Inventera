@@ -1,16 +1,61 @@
 /* ═══════════════════════════════════════════
    Local Fonts — Zero Network Latency
-   Inter Variable Font via public/fonts/inter
+   Inter Static Fonts via public/fonts/inter
    Material Symbols via public/fonts/
    ═══════════════════════════════════════════ */
 
-/* Inter Variable Font (100-900) dari file lokal */
+/* Inter 400 (Regular) */
 @font-face {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 100 900;
+    font-weight: 400;
     font-display: swap;
-    src: url('/fonts/inter/inter-variable.ttf') format('truetype');
+    src: url('/fonts/inter/inter-regular.ttf') format('truetype');
+}
+
+/* Inter 500 (Medium) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/fonts/inter/inter-medium.ttf') format('truetype');
+}
+
+/* Inter 600 (SemiBold) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/fonts/inter/inter-semibold.ttf') format('truetype');
+}
+
+/* Inter 700 (Bold) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/inter/inter-bold.ttf') format('truetype');
+}
+
+/* Inter 800 (ExtraBold) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('/fonts/inter/inter-extrabold.ttf') format('truetype');
+}
+
+/* Inter 900 (Black) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url('/fonts/inter/inter-black.ttf') format('truetype');
 }
 
 /* Material Symbols Outlined */

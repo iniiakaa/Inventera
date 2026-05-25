@@ -8,7 +8,8 @@
     <title>{{ config('app.name', 'Inventera') }} - Point of Sale</title>
 
     <!-- Preload Local Fonts -->
-    <link rel="preload" href="{{ asset('fonts/inter/inter-variable.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/inter/inter-regular.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/inter/inter-semibold.ttf') }}" as="font" type="font/ttf" crossorigin>
     <link rel="preload" href="{{ asset('fonts/material-symbols/material-symbols-outlined.woff2') }}" as="font" type="font/woff2" crossorigin>
 
     <!-- Scripts -->
