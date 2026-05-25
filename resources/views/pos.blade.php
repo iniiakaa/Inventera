@@ -18,11 +18,11 @@
                 class="flex-1 overflow-y-auto grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 content-start pr-1 pb-4">
                 <template x-for="item in filteredProducts" :key="item.inventory_id">
                     <div @click="addToCart(item)"
-                        class="liquid-glass rounded-2xl p-4 flex flex-col cursor-pointer hover:-translate-y-1 transition-transform duration-200 group h-fit">
+                        class="liquid-glass rounded-2xl p-4 flex flex-col cursor-pointer h-fit active:scale-[0.97] transition-transform duration-150">
                         <div
                             class="w-full h-24 bg-white/30 rounded-xl mb-3 flex items-center justify-center border border-white/40">
                             <span
-                                class="material-symbols-outlined text-[36px] text-on-surface-variant/30 group-hover:scale-110 transition-transform">inventory_2</span>
+                                class="material-symbols-outlined text-[36px] text-on-surface-variant/30">inventory_2</span>
                         </div>
                         <span class="font-label-sm text-label-sm text-on-surface-variant/70 mb-0.5"
                             x-text="item.sku"></span>
