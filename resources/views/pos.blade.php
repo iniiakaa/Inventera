@@ -27,9 +27,9 @@
             <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 pb-12">
                 <template x-for="item in filteredProducts" :key="item.inventory_id">
                     <div @click="addToCart(item)" class="liquid-glass rounded-xl p-4 flex flex-col cursor-pointer hover:-translate-y-1 transition-transform duration-200 group">
-                        <div class="w-full aspect-square bg-white/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden border border-white/40">
+                        <div class="w-full h-28 bg-white/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden border border-white/40">
                             <!-- Placeholder image, later replace with item.image -->
-                            <span class="material-symbols-outlined text-[48px] text-on-surface-variant/30 group-hover:scale-110 transition-transform">inventory_2</span>
+                            <span class="material-symbols-outlined text-[40px] text-on-surface-variant/30 group-hover:scale-110 transition-transform">inventory_2</span>
                         </div>
                         <div class="flex-1 flex flex-col">
                             <span class="font-label-sm text-label-sm text-on-surface-variant/70 mb-1" x-text="item.sku"></span>
