@@ -134,9 +134,9 @@
                     <div class="bg-black/20 backdrop-blur-[11px] p-8 pb-6">
                         <!-- Header -->
                         <div class="flex items-center justify-between mb-5">
-                            <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode Pembayaran</h2>
+                            <h2 class="font-headline-sm text-headline-sm text-white font-bold">Pilih Metode Pembayaran</h2>
                             <button @click="isPaymentModalOpen = false"
-                                class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-on-surface-variant transition-colors">
+                                class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 text-white/70 transition-colors">
                                 <span class="material-symbols-outlined text-[20px]">close</span>
                             </button>
                         </div>
@@ -150,37 +150,37 @@
                         <!-- Metode Pembayaran -->
                         <div class="grid grid-cols-3 gap-3 mb-6">
                             <button @click="paymentMethod = 'cash'"
-                                :class="paymentMethod === 'cash' ? 'bg-white/90 border-primary ring-1 ring-primary/30 shadow-sm' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                                :class="paymentMethod === 'cash' ? 'bg-white/20 border-white/40 ring-1 ring-white/50 shadow-sm' : 'bg-white/5 border-white/10 hover:bg-white/10'"
                                 class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
-                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'cash' ? 'text-primary' : 'text-on-surface-variant'">payments</span>
-                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'cash' ? 'font-bold text-on-surface' : 'text-on-surface-variant'">Tunai</span>
+                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'cash' ? 'text-white' : 'text-white/60'">payments</span>
+                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'cash' ? 'font-bold text-white' : 'text-white/60'">Tunai</span>
                             </button>
                             <button @click="paymentMethod = 'qris'; amountPaid = total"
-                                :class="paymentMethod === 'qris' ? 'bg-white/90 border-primary ring-1 ring-primary/30 shadow-sm' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                                :class="paymentMethod === 'qris' ? 'bg-white/20 border-white/40 ring-1 ring-white/50 shadow-sm' : 'bg-white/5 border-white/10 hover:bg-white/10'"
                                 class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
-                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'qris' ? 'text-primary' : 'text-on-surface-variant'">qr_code_2</span>
-                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'qris' ? 'font-bold text-on-surface' : 'text-on-surface-variant'">QRIS</span>
+                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'qris' ? 'text-white' : 'text-white/60'">qr_code_2</span>
+                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'qris' ? 'font-bold text-white' : 'text-white/60'">QRIS</span>
                             </button>
                             <button @click="paymentMethod = 'card'; amountPaid = total"
-                                :class="paymentMethod === 'card' ? 'bg-white/90 border-primary ring-1 ring-primary/30 shadow-sm' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                                :class="paymentMethod === 'card' ? 'bg-white/20 border-white/40 ring-1 ring-white/50 shadow-sm' : 'bg-white/5 border-white/10 hover:bg-white/10'"
                                 class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
-                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'card' ? 'text-primary' : 'text-on-surface-variant'">credit_card</span>
-                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'card' ? 'font-bold text-on-surface' : 'text-on-surface-variant'">Kartu</span>
+                                <span class="material-symbols-outlined text-[26px] mb-1.5" :class="paymentMethod === 'card' ? 'text-white' : 'text-white/60'">credit_card</span>
+                                <span class="font-label-sm text-label-sm" :class="paymentMethod === 'card' ? 'font-bold text-white' : 'text-white/60'">Kartu</span>
                             </button>
                         </div>
 
                         <!-- Input Nominal (hanya untuk Tunai) -->
                         <div x-show="paymentMethod === 'cash'" x-transition class="mb-2">
-                            <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Nominal Bayar</p>
+                            <p class="font-label-sm text-label-sm text-white/70 mb-2">Nominal Bayar</p>
                             <div class="relative mb-3">
-                                <span class="absolute left-5 top-1/2 -translate-y-1/2 font-label-md text-on-surface-variant">Rp</span>
+                                <span class="absolute left-5 top-1/2 -translate-y-1/2 font-label-md text-white/70">Rp</span>
                                 <input type="number" x-model.number="amountPaid"
-                                    class="w-full bg-white/50 border border-white/60 rounded-full py-3 pl-14 pr-5 text-on-surface text-lg font-bold focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
+                                    class="w-full bg-white/10 border border-white/20 rounded-full py-3 pl-14 pr-5 text-white text-lg font-bold focus:outline-none focus:ring-2 focus:ring-white/30 transition-all">
                             </div>
                             <div class="grid grid-cols-3 gap-2">
-                                <button @click="amountPaid = total" class="bg-black/5 hover:bg-black/10 rounded-full py-2 font-label-sm text-label-sm text-on-surface transition-colors font-medium">Pas</button>
-                                <button @click="amountPaid = Math.ceil(total / 50000) * 50000" class="bg-black/5 hover:bg-black/10 rounded-full py-2 font-label-sm text-label-sm text-on-surface transition-colors font-medium" x-text="formatRupiah(Math.ceil(total / 50000) * 50000)"></button>
-                                <button @click="amountPaid = Math.ceil(total / 100000) * 100000" class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full py-2 font-label-sm text-label-sm transition-colors font-bold border border-primary/20" x-text="formatRupiah(Math.ceil(total / 100000) * 100000)"></button>
+                                <button @click="amountPaid = total" class="bg-white/10 hover:bg-white/20 rounded-full py-2 font-label-sm text-label-sm text-white transition-colors font-medium">Pas</button>
+                                <button @click="amountPaid = Math.ceil(total / 50000) * 50000" class="bg-white/10 hover:bg-white/20 rounded-full py-2 font-label-sm text-label-sm text-white transition-colors font-medium" x-text="formatRupiah(Math.ceil(total / 50000) * 50000)"></button>
+                                <button @click="amountPaid = Math.ceil(total / 100000) * 100000" class="bg-primary hover:bg-primary/90 text-on-primary rounded-full py-2 font-label-sm text-label-sm transition-colors font-bold shadow-sm" x-text="formatRupiah(Math.ceil(total / 100000) * 100000)"></button>
                             </div>
                         </div>
                     </div>
