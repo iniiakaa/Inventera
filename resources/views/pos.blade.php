@@ -147,67 +147,96 @@
             <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
                 @click="isPaymentModalOpen = false"></div>
 
-            <div class="liquid-glass rounded-[24px] p-8 w-full max-w-md relative z-10 scale-100 transition-transform">
-                <button @click="isPaymentModalOpen = false"
-                    class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 text-on-surface transition-colors">
-                    <span class="material-symbols-outlined text-[20px]">close</span>
-                </button>
-
-                <h2 class="font-headline-md text-headline-md text-on-surface mb-6">Pembayaran</h2>
-
-                <div class="bg-primary-container/30 rounded-xl p-4 mb-6 border border-primary/20 text-center">
-                    <p class="font-body-md text-body-md text-on-surface-variant mb-1">Total Tagihan</p>
-                    <p class="font-display text-display text-primary" x-text="formatRupiah(total)"></p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="block font-label-md text-label-md text-on-surface mb-2">Uang Diterima (Rp)</label>
-                        <div class="relative">
-                            <span
-                                class="absolute left-4 top-1/2 -translate-y-1/2 font-label-lg text-on-surface-variant">Rp</span>
-                            <input type="number" x-model.number="amountPaid"
-                                class="w-full bg-white/50 border border-white/60 rounded-xl py-3 pl-12 pr-4 text-on-surface text-lg font-bold focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
-                        </div>
-                    </div>
-
-                    <!-- Quick Cash Buttons -->
-                    <div class="grid grid-cols-3 gap-2">
-                        <button @click="amountPaid = total"
-                            class="bg-white/30 hover:bg-white/50 rounded-lg py-2 font-label-md text-label-md transition-colors border border-white/40">Uang
-                            Pas</button>
-                        <button @click="amountPaid = Math.ceil(total / 50000) * 50000"
-                            class="bg-white/30 hover:bg-white/50 rounded-lg py-2 font-label-md text-label-md transition-colors border border-white/40"
-                            x-text="formatRupiah(Math.ceil(total / 50000) * 50000)"></button>
-                        <button @click="amountPaid = Math.ceil(total / 100000) * 100000"
-                            class="bg-white/30 hover:bg-white/50 rounded-lg py-2 font-label-md text-label-md transition-colors border border-white/40"
-                            x-text="formatRupiah(Math.ceil(total / 100000) * 100000)"></button>
-                    </div>
-
-                    <div class="bg-secondary-container/20 rounded-xl p-4 border border-secondary/20 mt-4 flex justify-between items-center"
-                        :class="changeAmount >= 0 ? 'bg-secondary-container/20' : 'bg-error-container/20 border-error/20'">
-                        <span class="font-body-md text-body-md text-on-surface-variant">Kembalian</span>
-                        <span class="font-headline-md text-headline-md"
-                            :class="changeAmount >= 0 ? 'text-secondary' : 'text-error'"
-                            x-text="changeAmount >= 0 ? formatRupiah(changeAmount) : 'Kurang ' + formatRupiah(Math.abs(changeAmount))"></span>
-                    </div>
-                </div>
-
-                <div class="mt-8">
-                    <button @click="submitCheckout" :disabled="isProcessing || changeAmount < 0"
-                        :class="(isProcessing || changeAmount < 0) ? 'opacity-50 cursor-not-allowed bg-surface-variant text-on-surface-variant' : 'bg-primary text-on-primary hover:bg-primary/90 shadow-[0_8px_16px_rgba(0,88,188,0.3)]'"
-                        class="w-full py-3.5 rounded-full font-label-lg text-label-lg transition-all duration-300 flex items-center justify-center gap-2">
-                        <span class="material-symbols-outlined" x-show="!isProcessing">check_circle</span>
-                        <svg x-show="isProcessing" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                            </circle>
-                            <path class="opacity-75" fill="currentColor"
-                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                            </path>
-                        </svg>
-                        <span x-text="isProcessing ? 'Memproses...' : 'Selesaikan Transaksi'"></span>
+            <div class="bg-white/60 dark:bg-surface-variant/80 backdrop-blur-[40px] border border-white/50 rounded-[32px] p-8 w-full max-w-[500px] relative z-10 shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode Pembayaran</h2>
+                    <button @click="isPaymentModalOpen = false"
+                        class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 text-on-surface-variant transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">close</span>
                     </button>
+                </div>
+
+                <!-- Total Tagihan -->
+                <div class="text-center mb-8">
+                    <p class="font-label-sm text-label-sm text-on-surface-variant mb-1 font-medium">Total Tagihan</p>
+                    <p class="text-[40px] font-bold text-primary leading-none" x-text="formatRupiah(total)"></p>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="grid grid-cols-3 gap-3 mb-8">
+                    <!-- Tunai -->
+                    <button @click="paymentMethod = 'cash'" 
+                            :class="paymentMethod === 'cash' ? 'bg-white/80 border-primary shadow-sm ring-1 ring-primary/20' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                            class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
+                        <span class="material-symbols-outlined text-[28px] mb-2" :class="paymentMethod === 'cash' ? 'text-primary' : 'text-on-surface-variant'">payments</span>
+                        <span class="font-label-sm text-label-sm" :class="paymentMethod === 'cash' ? 'text-on-surface font-bold' : 'text-on-surface-variant'">Tunai</span>
+                    </button>
+                    <!-- QRIS -->
+                    <button @click="paymentMethod = 'qris'; amountPaid = total" 
+                            :class="paymentMethod === 'qris' ? 'bg-white/80 border-primary shadow-sm ring-1 ring-primary/20' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                            class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
+                        <span class="material-symbols-outlined text-[28px] mb-2" :class="paymentMethod === 'qris' ? 'text-primary' : 'text-on-surface-variant'">qr_code_2</span>
+                        <span class="font-label-sm text-label-sm" :class="paymentMethod === 'qris' ? 'text-on-surface font-bold' : 'text-on-surface-variant'">QRIS</span>
+                    </button>
+                    <!-- Kartu -->
+                    <button @click="paymentMethod = 'card'; amountPaid = total" 
+                            :class="paymentMethod === 'card' ? 'bg-white/80 border-primary shadow-sm ring-1 ring-primary/20' : 'bg-white/30 border-white/40 hover:bg-white/50'"
+                            class="flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
+                        <span class="material-symbols-outlined text-[28px] mb-2" :class="paymentMethod === 'card' ? 'text-primary' : 'text-on-surface-variant'">credit_card</span>
+                        <span class="font-label-sm text-label-sm" :class="paymentMethod === 'card' ? 'text-on-surface font-bold' : 'text-on-surface-variant'">Kartu</span>
+                    </button>
+                </div>
+
+                <!-- Input Nominal (Only for Cash) -->
+                <div class="mb-8" x-show="paymentMethod === 'cash'" x-transition>
+                    <p class="font-label-sm text-label-sm text-on-surface-variant mb-2 font-medium">Nominal Bayar</p>
+                    <div class="relative mb-3">
+                        <span class="absolute left-5 top-1/2 -translate-y-1/2 font-label-md text-on-surface-variant">Rp</span>
+                        <input type="number" x-model.number="amountPaid"
+                            class="w-full bg-white/50 border-none rounded-full py-3.5 pl-14 pr-5 text-on-surface text-lg font-bold focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all">
+                    </div>
+                    <!-- Quick Cash Buttons -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <button @click="amountPaid = total" class="bg-black/5 hover:bg-black/10 rounded-full py-2.5 font-label-sm text-label-sm text-on-surface transition-colors font-medium">Pas</button>
+                        <button @click="amountPaid = Math.ceil(total / 50000) * 50000" class="bg-black/5 hover:bg-black/10 rounded-full py-2.5 font-label-sm text-label-sm text-on-surface transition-colors font-medium" x-text="formatRupiah(Math.ceil(total / 50000) * 50000)"></button>
+                        <button @click="amountPaid = Math.ceil(total / 100000) * 100000" class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full py-2.5 font-label-sm text-label-sm transition-colors font-bold border border-primary/20" x-text="formatRupiah(Math.ceil(total / 100000) * 100000)"></button>
+                    </div>
+                </div>
+                
+                <!-- Divider -->
+                <hr class="border-black/5 mb-6">
+
+                <!-- Summary & Actions -->
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Total Bayar</span>
+                        <span class="font-label-md text-label-md text-on-surface font-bold" x-text="formatRupiah(amountPaid)"></span>
+                    </div>
+                    <div class="flex items-center justify-between mb-8">
+                        <span class="font-headline-sm text-headline-sm font-bold" :class="changeAmount >= 0 ? 'text-[#16a34a]' : 'text-error'">Kembalian</span>
+                        <span class="font-headline-sm text-headline-sm font-bold" :class="changeAmount >= 0 ? 'text-[#16a34a]' : 'text-error'" x-text="changeAmount >= 0 ? formatRupiah(changeAmount) : 'Kurang ' + formatRupiah(Math.abs(changeAmount))"></span>
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <button @click="isPaymentModalOpen = false" class="px-6 py-4 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-black/5 transition-colors font-medium">
+                            Batal
+                        </button>
+                        <button @click="submitCheckout" :disabled="isProcessing || changeAmount < 0"
+                            :class="(isProcessing || changeAmount < 0) ? 'opacity-50 cursor-not-allowed bg-surface-variant text-on-surface-variant' : 'bg-primary text-on-primary hover:bg-primary/90 shadow-[0_8px_16px_rgba(0,88,188,0.3)] hover:-translate-y-1'"
+                            class="flex-1 py-4 rounded-full font-label-md text-label-md transition-all duration-300 flex items-center justify-center gap-2 font-bold">
+                            <span class="material-symbols-outlined text-[20px]" x-show="!isProcessing">print</span>
+                            <svg x-show="isProcessing" class="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                                </circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                            <span x-text="isProcessing ? 'Memproses...' : 'Konfirmasi & Cetak Struk'"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
