@@ -163,7 +163,7 @@
         transform: scale(1) translateY(0);
     }
 
-    /* Item hover */
+    /* Item hover & animation */
     .search-result-item {
         cursor: pointer;
         transition: background 0.18s ease;
@@ -173,6 +173,29 @@
     .search-result-item:hover {
         background: rgba(255, 255, 255, 0.3);
     }
+
+    @keyframes fadeInUpSearchItem {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .search-dropdown.open .search-result-item {
+        animation: fadeInUpSearchItem 0.4s cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+    
+    .search-dropdown.open .search-result-item:nth-of-type(1) { animation-delay: 0.10s; }
+    .search-dropdown.open .search-result-item:nth-of-type(2) { animation-delay: 0.15s; }
+    .search-dropdown.open .search-result-item:nth-of-type(3) { animation-delay: 0.20s; }
+    .search-dropdown.open .search-result-item:nth-of-type(4) { animation-delay: 0.25s; }
+    .search-dropdown.open .search-result-item:nth-of-type(5) { animation-delay: 0.30s; }
+    .search-dropdown.open .search-result-item:nth-of-type(6) { animation-delay: 0.35s; }
+    .search-dropdown.open .search-result-item:nth-of-type(7) { animation-delay: 0.40s; }
+    .search-dropdown.open .search-result-item:nth-of-type(8) { animation-delay: 0.45s; }
 
     /* Scrollbar */
     #search-dropdown ::-webkit-scrollbar { width: 4px; }
