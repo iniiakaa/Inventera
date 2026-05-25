@@ -20,7 +20,7 @@
                     <div @click="addToCart(item)"
                         class="liquid-glass rounded-2xl p-4 flex flex-col cursor-pointer h-fit active:scale-[0.97] transition-transform duration-150">
                         <div
-                            class="w-full h-24 bg-white/30 rounded-xl mb-3 flex items-center justify-center border border-white/40">
+                            class="w-full aspect-square bg-white/30 rounded-xl mb-3 flex items-center justify-center border border-white/40">
                             <span
                                 class="material-symbols-outlined text-[36px] text-on-surface-variant/30">inventory_2</span>
                         </div>
