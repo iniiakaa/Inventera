@@ -144,18 +144,18 @@
 
                 <!-- Modal Card -->
                 <div x-show="isPaymentModalOpen"
-                    x-transition:enter="transition-[opacity,transform] duration-[300ms] ease-out" 
-                    x-transition:enter-start="opacity-0 translate-y-10"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition-[opacity,transform] duration-[200ms] ease-in"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-10"
+                    x-transition:enter="transition-[opacity,transform] duration-[280ms] ease-[cubic-bezier(0.32,0.72,0,1)] transform-origin-top-right" 
+                    x-transition:enter-start="opacity-0 scale-[0.92] -translate-y-2"
+                    x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave="transition-[opacity,transform] duration-[200ms] ease-in transform-origin-top-right"
+                    x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 scale-[0.92] -translate-y-2"
                     class="relative z-10 w-full max-w-[460px] rounded-[28px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.15)] border border-white/10 flex flex-col">
 
                     <!-- Bagian Metode Pembayaran: Hitam transparan blur 11px -->
                     <div class="bg-black/10 backdrop-blur-[11px] p-8 pb-6">
                         <!-- Header -->
-                        <div class="flex items-center justify-between mb-5">
+                        <div class="flex items-center justify-between mb-5 modal-anim-1">
                             <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode
                                 Pembayaran</h2>
                             <button @click="isPaymentModalOpen = false"
@@ -165,13 +165,13 @@
                         </div>
 
                         <!-- Total Tagihan -->
-                        <div class="text-center mb-6">
+                        <div class="text-center mb-6 modal-anim-2">
                             <p class="font-label-sm text-label-sm text-on-surface-variant mb-1">Total Tagihan</p>
                             <p class="text-[38px] font-bold text-primary leading-none" x-text="formatRupiah(total)"></p>
                         </div>
 
                         <!-- Metode Pembayaran -->
-                        <div class="grid grid-cols-3 gap-3 mb-6">
+                        <div class="grid grid-cols-3 gap-3 mb-6 modal-anim-3">
                             <button @click="paymentMethod = 'cash'"
                                 :class="paymentMethod === 'cash' ? 'bg-primary/5 border-primary ring-1 ring-primary shadow-sm' : 'bg-white/10 border-white/20 hover:bg-primary/5 hover:border-primary/50 hover:ring-1 hover:ring-primary/30'"
                                 class="group flex flex-col items-center justify-center py-4 rounded-2xl border transition-all">
@@ -199,7 +199,7 @@
                         </div>
 
                         <!-- Input Nominal (hanya untuk Tunai) -->
-                        <div x-show="paymentMethod === 'cash'" x-transition class="mb-2">
+                        <div x-show="paymentMethod === 'cash'" x-transition class="mb-2 modal-anim-4">
                             <p class="font-label-sm text-label-sm text-on-surface-variant mb-2">Nominal Bayar</p>
                             <div class="relative mb-3 group">
                                 <span
@@ -226,7 +226,7 @@
                     <!-- Bagian Summary: Putih transparan blur 11px -->
                     <div class="bg-white/20 backdrop-blur-[11px] p-8 pt-6">
                         <!-- Summary -->
-                        <div class="mb-6">
+                        <div class="mb-6 modal-anim-5">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="font-label-sm text-label-sm text-on-surface-variant">Total Bayar</span>
                                 <span class="font-label-md text-label-md text-on-surface font-bold"
@@ -242,7 +242,7 @@
                         </div>
 
                         <!-- Actions -->
-                        <div class="flex items-center gap-3">
+                        <div class="flex items-center gap-3 modal-anim-6">
                             <button @click="isPaymentModalOpen = false"
                                 class="px-5 py-3.5 rounded-full font-label-md text-label-md text-on-surface-variant hover:bg-black/5 transition-colors">
                                 Batal
@@ -268,7 +268,27 @@
         </template>
     </div>
 
+    <style>
+        @keyframes modalContentFadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .modal-anim-1 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.10s; }
+        .modal-anim-2 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.15s; }
+        .modal-anim-3 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.20s; }
+        .modal-anim-4 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.25s; }
+        .modal-anim-5 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.30s; }
+        .modal-anim-6 { animation: modalContentFadeInUp 0.4s cubic-bezier(0.32, 0.72, 0, 1) both; animation-delay: 0.35s; }
+    </style>
+
     <!-- Inject Data -->
+    <!-- Script Section -->
     <script>
         const INVENTORY_DATA = @json($inventoryData);
 
