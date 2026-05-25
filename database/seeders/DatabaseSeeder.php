@@ -102,15 +102,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\Inventory::create([
             'branch_id' => $jakartaBranch->id,
             'product_id' => $produk1->id,
-            'quantity' => 150,
-            'reorder_level' => 20
+            'stock' => 150,
+            'min_stock' => 20
         ]);
 
         \App\Models\Inventory::create([
             'branch_id' => $jakartaBranch->id,
             'product_id' => $produk2->id,
-            'quantity' => 300,
-            'reorder_level' => 50
+            'stock' => 300,
+            'min_stock' => 50
         ]);
     }
 }
