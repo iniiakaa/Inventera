@@ -32,11 +32,22 @@
     
     <!-- Footer Area -->
     <div class="space-y-4 pt-4 border-t border-white/20">
+        <!-- User Profile -->
+        <div class="flex items-center gap-3 px-2 mb-4">
+            <div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-white/50 shadow-sm flex-shrink-0">
+                <img alt="Profile" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'Jayusman') }}&color=7F9CF5&background=EBF4FF">
+            </div>
+            <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md text-on-surface truncate">{{ Auth::user()->name ?? 'Jayusman' }}</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant truncate capitalize">{{ Auth::user()->role ?? 'Role' }}</span>
+            </div>
+        </div>
+
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <a class="flex items-center space-x-4 px-4 py-2 text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5 rounded-xl transition-all duration-300" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
-                <span class="material-symbols-outlined">logout</span>
-                <span class="font-label-md text-label-md">Logout</span>
+            <a class="flex items-center space-x-4 px-4 py-2 text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-error/10 hover:text-error rounded-xl transition-all duration-300 group" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                <span class="material-symbols-outlined group-hover:text-error transition-colors">logout</span>
+                <span class="font-label-md text-label-md group-hover:text-error transition-colors">Logout</span>
             </a>
         </form>
     </div>
