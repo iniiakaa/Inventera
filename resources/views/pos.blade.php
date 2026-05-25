@@ -12,20 +12,11 @@
                     <span
                         class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                     <input type="text" x-model="searchQuery" placeholder="Cari nama produk atau SKU..."
-                        class="w-full bg-white/20 border border-white/40 rounded-full py-2.5 pl-10 pr-4 text-on-surface placeholder:text-on-surface-variant/70 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all font-body-md text-body-md">
+                        class="w-full bg-white/20 border border-white/40 rounded-full py-2.5 pl-10 pr-4 text-on-surface placeholder:text-on-surface-variant/70 focus:outline-none transition-all font-body-md text-body-md">
                 </div>
 
-                <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-2 lg:pb-0">
-                    <button @click="activeCategory = 'all'"
-                        :class="activeCategory === 'all' ? 'bg-primary text-on-primary' : 'bg-white/20 text-on-surface hover:bg-white/40'"
-                        class="px-4 py-2 rounded-full whitespace-nowrap font-label-md text-label-md transition-all border border-white/40">Semua</button>
-                    @foreach($categories as $category)
-                        <button @click="activeCategory = '{{ $category->id }}'"
-                            :class="activeCategory == '{{ $category->id }}' ? 'bg-primary text-on-primary' : 'bg-white/20 text-on-surface hover:bg-white/40'"
-                            class="px-4 py-2 rounded-full whitespace-nowrap font-label-md text-label-md transition-all border border-white/40">
-                            {{ $category->name }}
-                        </button>
-                    @endforeach
+                <div class="flex items-center gap-2">
+                    <x-notif-dropdown />
                 </div>
             </div>
 
@@ -36,7 +27,7 @@
                     <div @click="addToCart(item)"
                         class="liquid-glass rounded-xl p-4 flex flex-col cursor-pointer hover:-translate-y-1 transition-transform duration-200 group">
                         <div
-                            class="w-full h-28 bg-white/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden border border-white/40">
+                            class="w-full aspect-square bg-white/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden border border-white/40">
                             <span
                                 class="material-symbols-outlined text-[40px] text-on-surface-variant/30 group-hover:scale-110 transition-transform">inventory_2</span>
                         </div>
