@@ -143,11 +143,11 @@
 
         <!-- Payment Modal -->
         <div x-show="isPaymentModalOpen" style="display: none;"
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+            class="fixed inset-0 z-[100] flex items-start justify-center p-8 overflow-y-auto">
+            <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"
                 @click="isPaymentModalOpen = false"></div>
 
-            <div class="bg-white/60 dark:bg-surface-variant/80 backdrop-blur-[40px] border border-white/50 rounded-[32px] p-8 w-full max-w-[500px] h-fit max-h-[90vh] overflow-y-auto hide-scrollbar relative z-10 shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
+            <div class="bg-white/60 dark:bg-surface-variant/80 backdrop-blur-[40px] border border-white/50 rounded-[32px] p-8 w-full max-w-[500px] my-auto relative z-10 shadow-[0_20px_60px_rgba(0,0,0,0.1)]">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode Pembayaran</h2>
