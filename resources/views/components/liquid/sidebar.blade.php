@@ -7,7 +7,7 @@
         </div>
         <div>
             <h1 class="font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed-dim">Inventera</h1>
-            <p class="font-label-sm text-label-sm text-on-surface-variant">Premium Retail Mgmt</p>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">Jayusman Retail</p>
         </div>
     </div>
     
