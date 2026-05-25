@@ -80,4 +80,19 @@ class User extends Authenticatable
     {
         return $this->role === 'cashier';
     }
+    /**
+     * Cek apakah user adalah supervisor.
+     */
+    public function isSupervisor(): bool
+    {
+        return $this->role === 'supervisor';
+    }
+
+    /**
+     * Cek apakah user adalah staf gudang.
+     */
+    public function isWarehouse(): bool
+    {
+        return $this->role === 'warehouse';
+    }
 }
