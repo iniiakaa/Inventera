@@ -182,7 +182,7 @@
         transform: scale(1) translateY(0);
     }
 
-    /* Notif item hover */
+    /* Notif item hover & animation */
     .notif-item {
         cursor: pointer;
         transition: background 0.18s ease;
@@ -191,6 +191,26 @@
     .notif-item:hover {
         background: rgba(255, 255, 255, 0.3);
     }
+
+    @keyframes fadeInUpItem {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    .notif-dropdown.open .notif-item {
+        animation: fadeInUpItem 0.4s cubic-bezier(0.32, 0.72, 0, 1) both;
+    }
+    
+    .notif-dropdown.open .notif-item:nth-child(1) { animation-delay: 0.10s; }
+    .notif-dropdown.open .notif-item:nth-child(2) { animation-delay: 0.15s; }
+    .notif-dropdown.open .notif-item:nth-child(3) { animation-delay: 0.20s; }
+    .notif-dropdown.open .notif-item:nth-child(4) { animation-delay: 0.25s; }
+    .notif-dropdown.open .notif-item:nth-child(5) { animation-delay: 0.30s; }
 
     /* Scrollbar dalam dropdown */
     #notif-dropdown ::-webkit-scrollbar {
