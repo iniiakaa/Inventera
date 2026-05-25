@@ -20,4 +20,12 @@ Route::get('/inventory', function () {
     return view('inventory'); // or however we name it later
 })->middleware(['auth', 'role:warehouse'])->name('inventory');
 
+Route::get('/transactions', function () {
+    return "Halaman Transaksi"; 
+})->middleware(['auth'])->name('transactions');
+
+Route::get('/reports', function () {
+    return "Halaman Laporan"; 
+})->middleware(['auth'])->name('reports');
+
 require __DIR__.'/auth.php';
