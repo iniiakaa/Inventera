@@ -24,7 +24,7 @@
             </div>
 
             <!-- Product Grid -->
-            <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 pb-12">
+            <div class="flex-1 overflow-y-auto pr-2 grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 pb-12 content-start items-start auto-rows-max">
                 <template x-for="item in filteredProducts" :key="item.inventory_id">
                     <div @click="addToCart(item)" class="liquid-glass rounded-xl p-4 flex flex-col cursor-pointer hover:-translate-y-1 transition-transform duration-200 group">
                         <div class="w-full h-28 bg-white/30 rounded-lg mb-3 flex items-center justify-center overflow-hidden border border-white/40">
