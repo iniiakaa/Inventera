@@ -7,6 +7,10 @@
 
     <title>{{ config('app.name', 'Inventera') }} - Dashboard</title>
 
+    <!-- Preload Local Fonts -->
+    <link rel="preload" href="{{ asset('fonts/inter/inter-variable.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ asset('fonts/material-symbols/material-symbols-outlined.woff2') }}" as="font" type="font/woff2" crossorigin>
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
