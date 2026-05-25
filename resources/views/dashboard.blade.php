@@ -9,8 +9,7 @@
                 <button class="font-label-md text-label-md text-primary flex items-center">View All <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span></button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <!-- Card 1 -->
-                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between hover:translate-y-[-4px] transition-transform duration-300 cursor-pointer group">
+                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between transition-transform duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_city</span>
@@ -23,7 +22,7 @@
                     </div>
                 </div>
                 <!-- Card 2 -->
-                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between hover:translate-y-[-4px] transition-transform duration-300 cursor-pointer group">
+                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between transition-transform duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-10 h-10 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
@@ -36,7 +35,7 @@
                     </div>
                 </div>
                 <!-- Card 3 -->
-                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between hover:translate-y-[-4px] transition-transform duration-300 cursor-pointer group">
+                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between transition-transform duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-10 h-10 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
@@ -49,7 +48,7 @@
                     </div>
                 </div>
                 <!-- Card 4 -->
-                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between hover:translate-y-[-4px] transition-transform duration-300 cursor-pointer group">
+                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between transition-transform duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
@@ -62,7 +61,7 @@
                     </div>
                 </div>
                 <!-- Card 5 -->
-                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between hover:translate-y-[-4px] transition-transform duration-300 cursor-pointer group">
+                <div class="liquid-glass rounded-lg p-6 flex flex-col justify-between transition-transform duration-300 cursor-pointer group">
                     <div class="flex items-center justify-between mb-4">
                         <div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface flex items-center justify-center">
                             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">location_on</span>
@@ -154,9 +153,11 @@
                         height: 400,
                         type: 'area',
                         fontFamily: 'Inter, sans-serif',
+                        background: 'transparent',
                         toolbar: { show: false },
                         zoom: { enabled: false }
                     },
+                    tooltip: { enabled: false },
                     colors: ['#0058bc'],
                     fill: {
                         type: 'gradient',
