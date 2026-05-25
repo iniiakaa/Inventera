@@ -98,7 +98,7 @@
             <!-- Stock Alerts & Quick Actions -->
             <section class="flex flex-col space-y-6 xl:col-span-1">
                 <!-- Alerts Panel -->
-                <div class="liquid-glass rounded-xl p-6 flex-1">
+                <div class="liquid-glass rounded-xl p-6 flex-1 flex flex-col">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="font-headline-md text-headline-md text-on-surface">Critical Stock</h3>
                         <span class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center font-label-sm text-label-sm">3</span>
@@ -132,8 +132,10 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('inventory') }}" class="w-full mt-6 py-3 px-4 liquid-glass rounded-full text-primary font-label-md text-label-sm hover:bg-white/60 transition-all text-center block">
-                        Manage Inventory
+                    <a href="{{ route('inventory') }}" class="w-full mt-auto pt-6 block">
+                        <div class="py-3 px-4 liquid-glass rounded-full text-primary font-label-md text-label-sm hover:bg-white/60 transition-all text-center">
+                            Manage Inventory
+                        </div>
                     </a>
                 </div>
             </section>

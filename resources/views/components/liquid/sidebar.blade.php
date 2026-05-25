@@ -1,5 +1,5 @@
 <!-- Shared Component: SideNavBar -->
-<nav class="hidden md:flex flex-col p-6 space-y-4 bg-white/10 dark:bg-black/10 backdrop-blur-[40px] border-white/20 dark:border-white/10 shadow-[4px_0_40px_rgba(0,0,0,0.05)] fixed w-[280px] z-50 top-[48px] left-[48px] h-fit rounded-[32px] border max-h-[calc(100vh-96px)]">
+<nav class="hidden md:flex flex-col p-6 space-y-4 bg-white/10 dark:bg-black/10 backdrop-blur-[40px] border-white/20 dark:border-white/10 shadow-[4px_0_40px_rgba(0,0,0,0.05)] fixed w-[280px] z-50 top-[48px] left-[48px] h-[calc(100vh-96px)] rounded-[32px] border">
     <!-- Header -->
     <div class="flex items-center space-x-4 mb-8 px-2">
         <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-container to-primary flex items-center justify-center shadow-md">
