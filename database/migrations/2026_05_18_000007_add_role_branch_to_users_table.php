@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['owner', 'manager', 'cashier'])->default('cashier')->after('email');
+            $table->enum('role', ['owner', 'manager', 'supervisor', 'cashier', 'warehouse'])->default('cashier')->after('email');
             $table->foreignId('branch_id')
                   ->nullable()
                   ->after('role')
