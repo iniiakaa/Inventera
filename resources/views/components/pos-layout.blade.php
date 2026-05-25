@@ -7,10 +7,10 @@
 
     <title>{{ config('app.name', 'Inventera') }} - Point of Sale</title>
 
-    <!-- Preload Local Fonts -->
-    <link rel="preload" href="{{ asset('fonts/inter/inter-regular.ttf') }}" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="{{ asset('fonts/inter/inter-semibold.ttf') }}" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="{{ asset('fonts/material-symbols/material-symbols-outlined.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <!-- Preload Local Fonts via Vite -->
+    <link rel="preload" href="{{ Vite::asset('resources/fonts/inter/inter-regular.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ Vite::asset('resources/fonts/inter/inter-semibold.ttf') }}" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="{{ Vite::asset('resources/fonts/material-symbols/material-symbols-outlined.woff2') }}" as="font" type="font/woff2" crossorigin>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
