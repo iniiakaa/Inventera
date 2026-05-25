@@ -2,13 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\DashboardController;
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'role:owner,manager,supervisor'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'role:owner,manager,supervisor'])
+    ->name('dashboard');
 
 Route::get('/pos', function () {
     return view('pos'); // or however we name it later
