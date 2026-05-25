@@ -143,13 +143,13 @@
 
         <!-- Payment Modal -->
         <div x-show="isPaymentModalOpen" style="display: none;"
-            class="fixed inset-0 z-[100] grid place-items-center p-6">
+            class="fixed inset-0 z-[100]">
             <!-- Backdrop -->
             <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"
                 @click="isPaymentModalOpen = false"></div>
 
-            <!-- Modal Box -->
-            <div class="bg-white/70 backdrop-blur-[40px] border border-white/50 rounded-[32px] p-8 w-full max-w-[480px] relative z-10 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
+            <!-- Modal Box: centered via absolute + transform -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] max-w-[calc(100vw-48px)] bg-white/70 backdrop-blur-[40px] border border-white/50 rounded-[32px] p-8 z-10 shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
                 <!-- Header -->
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode Pembayaran</h2>
