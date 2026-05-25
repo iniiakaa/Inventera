@@ -37,11 +37,11 @@
 
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col min-w-0 md:pl-[344px]">
-            <!-- Topbar -->
-            @include('components.liquid.topbar')
-
             <!-- Page Content -->
-            <main class="flex-1 p-4 md:p-8 pt-24 md:pt-8 w-full max-w-container-max mx-auto">
+            <main class="flex-1 p-4 md:p-12 pt-24 md:pt-12 w-full max-w-container-max mx-auto">
+                <!-- Topbar -->
+                @include('components.liquid.topbar')
+
                 {{ $slot }}
             </main>
         </div>
