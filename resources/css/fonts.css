@@ -1,11 +1,17 @@
 /* ═══════════════════════════════════════════
    Local Fonts — Zero Network Latency
-   Inter via @fontsource-variable/inter (npm)
+   Inter Variable Font via public/fonts/inter
    Material Symbols via public/fonts/
    ═══════════════════════════════════════════ */
 
-/* Inter Variable Font (semua weight 100-900 dalam 1 file) */
-@import '@fontsource-variable/inter';
+/* Inter Variable Font (100-900) dari file lokal */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('/fonts/inter/inter-variable.ttf') format('truetype');
+}
 
 /* Material Symbols Outlined */
 @font-face {
