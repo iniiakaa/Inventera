@@ -144,16 +144,16 @@
 
                 <!-- Modal Card -->
                 <div x-show="isPaymentModalOpen"
-                    x-transition:enter="transition-[opacity,transform] duration-[280ms] ease-[cubic-bezier(0.32,0.72,0,1)] transform-origin-top-right" 
+                    x-transition:enter="transition-[opacity,transform] duration-[280ms] delay-100 ease-[cubic-bezier(0.32,0.72,0,1)] transform-origin-top-right" 
                     x-transition:enter-start="opacity-0 scale-[0.92] -translate-y-2"
                     x-transition:enter-end="opacity-100 scale-100 translate-y-0"
                     x-transition:leave="transition-[opacity,transform] duration-[200ms] ease-in transform-origin-top-right"
                     x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                     x-transition:leave-end="opacity-0 scale-[0.92] -translate-y-2"
-                    class="relative z-10 w-full max-w-[460px] rounded-[28px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.15)] border border-white/10 flex flex-col">
+                    class="relative z-10 w-full max-w-[460px] rounded-[28px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.15)] border border-white/10 flex flex-col backdrop-blur-[11px] bg-white/5">
 
-                    <!-- Bagian Metode Pembayaran: Hitam transparan blur 11px -->
-                    <div class="bg-black/10 backdrop-blur-[11px] p-8 pb-6">
+                    <!-- Bagian Metode Pembayaran: Hitam transparan -->
+                    <div class="bg-black/10 p-8 pb-6">
                         <!-- Header -->
                         <div class="flex items-center justify-between mb-5 modal-anim-1">
                             <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Pilih Metode
@@ -223,8 +223,8 @@
                     <!-- Garis Pemisah -->
                     <div class="h-[1px] bg-white/30 w-full z-20"></div>
 
-                    <!-- Bagian Summary: Putih transparan blur 11px -->
-                    <div class="bg-white/20 backdrop-blur-[11px] p-8 pt-6">
+                    <!-- Bagian Summary: Putih transparan -->
+                    <div class="bg-white/20 p-8 pt-6">
                         <!-- Summary -->
                         <div class="mb-6 modal-anim-5">
                             <div class="flex justify-between items-center mb-2">
