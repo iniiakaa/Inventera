@@ -138,7 +138,7 @@
 
     <div class="flex min-h-screen w-full">
         <!-- Shared Component: SideNavBar -->
-        <x-retail-sidebar :active="$active ?? 'dashboard'" />
+        <x-sidebar />
 
         <!-- Main Content Area -->
         <main class="flex-1 w-full md:ml-[360px] p-margin-mobile md:p-margin-desktop max-w-container-max mx-auto">

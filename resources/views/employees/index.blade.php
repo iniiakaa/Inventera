@@ -1,4 +1,4 @@
-<x-layouts.retail active="employees" title="Karyawan - Inventera">
+<x-layouts.admin active="employees" title="Karyawan - Inventera">
     <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 mt-8 md:mt-0">
         <div>
             <p class="font-body-lg text-body-lg text-on-surface-variant mb-2">Manajemen SDM</p>
@@ -15,4 +15,4 @@
         <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Halaman ini akan menampilkan daftar karyawan, role, dan cabang masing-masing.</p>
     </section>
     <div class="pb-12"></div>
-</x-layouts.retail>
+</x-layouts.admin>

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\Liquid;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class LiquidLayout extends Component
+class Topbar extends Component
 {
     public function render(): View
     {
-        return view('components.app-layout');
+        return view('components.topbar');
     }
 }

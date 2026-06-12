@@ -5,10 +5,10 @@ namespace App\View\Components;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class LiquidLayout extends Component
+class SearchDropdown extends Component
 {
     public function render(): View
     {
-        return view('components.app-layout');
+        return view('components.search-dropdown');
     }
 }

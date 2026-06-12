@@ -1,112 +1,119 @@
-@props(['active' => 'dashboard'])
-
-<aside id="sidebar" class="sidebar">
-    {{-- Brand --}}
-    <div class="sidebar-brand">
-        <h1 class="sidebar-logo">Luminescent</h1>
-        <span class="sidebar-subtitle">FINANCIAL PLATFORM</span>
+<!-- Shared Component: SideNavBar -->
+@php $role = Auth::user()->role ?? ''; @endphp
+<nav class="hidden md:flex flex-col p-6 space-y-4 bg-white/10 dark:bg-black/10 backdrop-blur-[40px] border-white/20 dark:border-white/10 shadow-[4px_0_40px_rgba(0,0,0,0.05)] fixed w-[280px] z-50 top-[48px] left-[48px] h-[calc(100vh-96px)] rounded-[32px] border">
+    <!-- Header -->
+    <div class="flex items-center space-x-4 mb-8 px-2">
+        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-primary-container to-primary flex items-center justify-center shadow-md">
+            <span class="material-symbols-outlined text-on-primary text-headline-md font-headline-md">storefront</span>
+        </div>
+        <div>
+            <h1 class="font-headline-md text-headline-md font-black text-primary dark:text-primary-fixed-dim">Inventera</h1>
+            <p class="font-label-sm text-label-sm text-on-surface-variant">Jayusman Retail</p>
+        </div>
     </div>
-
-    {{-- Navigation --}}
-    <nav class="sidebar-nav">
-        <a href="{{ url('/dashboard') }}"
-           class="sidebar-link {{ $active === 'dashboard' ? 'active' : '' }}"
-           id="nav-dashboard">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
-                <path d="M9 21V12h6v9"/>
-            </svg>
-            <span>Dashboard</span>
-            @if($active === 'dashboard')
-                <span class="sidebar-active-bar"></span>
-            @endif
+    
+    <!-- Navigation Links -->
+    <div class="flex-1 space-y-2 overflow-y-auto">
+        {{-- Dashboard: owner, manager, supervisor --}}
+        @if(in_array($role, ['owner', 'manager', 'supervisor']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('dashboard') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('dashboard') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('dashboard') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">dashboard</span>
+            <span class="font-label-md text-label-md">Dashboard</span>
         </a>
+        @endif
 
-        <a href="{{ url('/transactions') }}"
-           class="sidebar-link {{ $active === 'transactions' ? 'active' : '' }}"
-           id="nav-transactions">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M17 1l4 4-4 4"/>
-                <path d="M3 11V9a4 4 0 014-4h14"/>
-                <path d="M7 23l-4-4 4-4"/>
-                <path d="M21 13v2a4 4 0 01-4 4H3"/>
-            </svg>
-            <span>Transactions</span>
-            @if($active === 'transactions')
-                <span class="sidebar-active-bar"></span>
-            @endif
+        {{-- POS / Sales: cashier only (UC-09, UC-10, UC-11) --}}
+        @if(in_array($role, ['cashier']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('pos') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('pos') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('pos') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">payments</span>
+            <span class="font-label-md text-label-md">Sales</span>
         </a>
+        @endif
 
-        <a href="{{ url('/reports') }}"
-           class="sidebar-link {{ $active === 'reports' ? 'active' : '' }}"
-           id="nav-reports">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
-                <path d="M14 2v6h6"/>
-                <path d="M16 13H8"/>
-                <path d="M16 17H8"/>
-                <path d="M10 9H8"/>
-            </svg>
-            <span>Reports</span>
-            @if($active === 'reports')
-                <span class="sidebar-active-bar"></span>
-            @endif
+        {{-- Inventory: warehouse, supervisor, manager (UC-05, UC-06, UC-07, UC-08) --}}
+        @if(in_array($role, ['warehouse', 'supervisor', 'manager']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('inventory') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('inventory') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('inventory') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">inventory_2</span>
+            <span class="font-label-md text-label-md">Inventory</span>
         </a>
+        @endif
 
-        <a href="{{ url('/accounts') }}"
-           class="sidebar-link {{ $active === 'accounts' ? 'active' : '' }}"
-           id="nav-accounts">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
-                <path d="M1 10h22"/>
-            </svg>
-            <span>Accounts</span>
-            @if($active === 'accounts')
-                <span class="sidebar-active-bar"></span>
-            @endif
+        {{-- Transactions: owner, manager (UC-13) --}}
+        @if(in_array($role, ['owner', 'manager']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('transactions') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('transactions') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('transactions') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">point_of_sale</span>
+            <span class="font-label-md text-label-md">Transaksi</span>
         </a>
+        @endif
 
-        <a href="{{ url('/settings') }}"
-           class="sidebar-link {{ $active === 'settings' ? 'active' : '' }}"
-           id="nav-settings">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="12" r="3"/>
-                <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
-            </svg>
-            <span>Settings</span>
-            @if($active === 'settings')
-                <span class="sidebar-active-bar"></span>
-            @endif
+        {{-- Reports: owner, manager (UC-13, UC-14, UC-16) --}}
+        @if(in_array($role, ['owner', 'manager']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('reports') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('reports') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('reports') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">assessment</span>
+            <span class="font-label-md text-label-md">Laporan</span>
         </a>
-    </nav>
+        @endif
 
-    {{-- User Profile --}}
-    <div class="sidebar-user">
-        <div class="sidebar-user-avatar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-5 h-5 text-cyan-400">
-                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-            </svg>
+        {{-- Employees: owner, manager (UC-03) --}}
+        @if(in_array($role, ['owner', 'manager']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('employees') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('employees') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('employees') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">badge</span>
+            <span class="font-label-md text-label-md">Karyawan</span>
+        </a>
+        @endif
+
+        {{-- Branches: owner only (UC-02) --}}
+        @if(in_array($role, ['owner']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('branches.*') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('branches.index') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('branches.*') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">store</span>
+            <span class="font-label-md text-label-md">Cabang</span>
+        </a>
+        @endif
+
+        {{-- Customers: owner, manager --}}
+        @if(in_array($role, ['owner', 'manager']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('customers') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('customers') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('customers') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">group</span>
+            <span class="font-label-md text-label-md">Pelanggan</span>
+        </a>
+        @endif
+
+        {{-- Audit Log: owner only (UC-15) --}}
+        @if(in_array($role, ['owner']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('audit-log') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('audit-log') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('audit-log') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">manage_history</span>
+            <span class="font-label-md text-label-md">Audit Log</span>
+        </a>
+        @endif
+    </div>
+    
+    <!-- Footer Area -->
+    <div class="space-y-4 pt-4 border-t border-white/20">
+        {{-- Settings: owner only (UC-02, UC-04) --}}
+        @if(in_array($role, ['owner']))
+        <a class="flex items-center space-x-4 px-4 py-3 {{ request()->routeIs('settings') ? 'bg-primary text-on-primary shadow-[0_8px_16px_rgba(0,88,188,0.3)]' : 'text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-white/10 dark:hover:bg-white/5' }} rounded-xl transition-all duration-300" href="{{ route('settings') }}">
+            <span class="material-symbols-outlined" style="{{ request()->routeIs('settings') ? 'font-variation-settings: \'FILL\' 1;' : '' }}">settings</span>
+            <span class="font-label-md text-label-md">Pengaturan</span>
+        </a>
+        @endif
+
+        <!-- User Profile -->
+        <div class="flex items-center gap-3 px-2 mb-4">
+            <div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border-2 border-white/50 shadow-sm flex-shrink-0">
+                <img alt="Profile" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name={{ urlencode(Auth::user()->name ?? 'Jayusman') }}&color=7F9CF5&background=EBF4FF">
+            </div>
+            <div class="flex flex-col min-w-0">
+                <span class="font-label-md text-label-md text-on-surface truncate">{{ Auth::user()->name ?? 'Jayusman' }}</span>
+                <span class="font-body-sm text-body-sm text-on-surface-variant truncate capitalize">{{ Auth::user()->role ?? 'Role' }}</span>
+            </div>
         </div>
-        <div class="sidebar-user-info">
-            <span class="sidebar-user-name">{{ auth()->user()->name ?? 'Guest' }}</span>
-            <span class="sidebar-user-role">Finance Manager</span>
-        </div>
 
-        {{-- Logout Button --}}
-        <form method="POST" action="{{ route('logout') }}" style="margin-left:auto;">
+        <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit"
-                    title="Logout"
-                    style="background:none;border:none;cursor:pointer;padding:6px;border-radius:8px;color:#4b5563;transition:color 0.2s,background 0.2s;display:flex;align-items:center;"
-                    onmouseover="this.style.color='#f87171';this.style.background='rgba(239,68,68,0.08)'"
-                    onmouseout="this.style.color='#4b5563';this.style.background='none'">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16">
-                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
-                    <polyline points="16 17 21 12 16 7"/>
-                    <line x1="21" y1="12" x2="9" y2="12"/>
-                </svg>
-            </button>
+            <a class="flex items-center space-x-4 px-4 py-2 text-on-surface-variant/80 dark:text-surface-variant/80 hover:bg-error/10 hover:text-error rounded-xl transition-all duration-300 group" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+                <span class="material-symbols-outlined group-hover:text-error transition-colors">logout</span>
+                <span class="font-label-md text-label-md group-hover:text-error transition-colors">Logout</span>
+            </a>
         </form>
     </div>
-</aside>
+</nav>

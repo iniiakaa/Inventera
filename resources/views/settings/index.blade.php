@@ -1,4 +1,4 @@
-<x-layouts.retail active="settings" title="Settings - Jayusman Retail Management">
+<x-layouts.admin active="settings" title="Settings - Jayusman Retail Management">
     <!-- Page Header -->
     <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 mt-8 md:mt-0">
         <div>
@@ -144,4 +144,4 @@
         </div>
     </div>
     <div class="pb-12"></div>
-</x-layouts.retail>
+</x-layouts.admin>

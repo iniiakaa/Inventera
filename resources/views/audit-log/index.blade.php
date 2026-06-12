@@ -1,4 +1,4 @@
-<x-layouts.retail active="audit-log" title="Audit Log - Inventera">
+<x-layouts.admin active="audit-log" title="Audit Log - Inventera">
     <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 mt-8 md:mt-0">
         <div>
             <p class="font-body-lg text-body-lg text-on-surface-variant mb-2">Keamanan & Kepatuhan</p>
@@ -11,4 +11,4 @@
         <p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Halaman ini akan mencatat setiap aktivitas krusial — siapa mengubah apa dan kapan — sebagai pencegahan manipulasi data.</p>
     </section>
     <div class="pb-12"></div>
-</x-layouts.retail>
+</x-layouts.admin>

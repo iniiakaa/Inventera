@@ -26,6 +26,6 @@ class DashboardController extends Controller
             'revenue_series' => [310, 400, 280, 510, 420, 109, 1000]
         ];
 
-        return view('dashboard', $data);
+        return view('dashboard.index', $data);
     }
 }

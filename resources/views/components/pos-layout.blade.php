@@ -32,7 +32,7 @@
 
     <div class="flex h-screen w-full overflow-hidden">
         <!-- Sidebar -->
-        @include('components.liquid.sidebar')
+        <x-sidebar />
 
         <!-- Main Content: full height, no extra padding -->
         <main class="flex-1 md:pl-[344px] h-screen flex flex-col overflow-hidden p-6">

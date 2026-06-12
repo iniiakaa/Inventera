@@ -14,19 +14,35 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
 
 use App\Http\Controllers\PosController;
 
-Route::get('/pos', [PosController::class, 'index'])->middleware(['auth', 'role:cashier,manager,owner'])->name('pos');
-Route::post('/pos/checkout', [PosController::class, 'store'])->middleware(['auth', 'role:cashier,manager,owner'])->name('pos.checkout');
+// UC-09, UC-10, UC-11: POS — Kasir only
+Route::get('/pos', [PosController::class, 'index'])->middleware(['auth', 'role:cashier'])->name('pos');
+Route::post('/pos/checkout', [PosController::class, 'store'])->middleware(['auth', 'role:cashier'])->name('pos.checkout');
 
+// UC-05, UC-06, UC-07, UC-08: Inventori & Gudang — Warehouse, Supervisor, Manager
 Route::get('/inventory', function () {
-    return view('inventory'); // or however we name it later
-})->middleware(['auth', 'role:warehouse'])->name('inventory');
+    return view('inventory.index');
+})->middleware(['auth', 'role:warehouse,supervisor,manager'])->name('inventory');
 
-Route::get('/transactions', function () { return "Halaman Transaksi"; })->middleware(['auth'])->name('transactions');
-Route::get('/reports', function () { return "Halaman Laporan"; })->middleware(['auth'])->name('reports');
-Route::get('/employees', function () { return "Halaman Karyawan"; })->middleware(['auth'])->name('employees');
-Route::get('/branches', function () { return "Halaman Cabang"; })->middleware(['auth'])->name('branches');
-Route::get('/customers', function () { return "Halaman Pelanggan"; })->middleware(['auth'])->name('customers');
-Route::get('/audit-log', function () { return "Halaman Audit Log"; })->middleware(['auth'])->name('audit-log');
-Route::get('/settings', function () { return "Halaman Pengaturan"; })->middleware(['auth'])->name('settings');
+// UC-13: Laporan Transaksi — Owner, Manager
+Route::get('/transactions', function () { return view('transactions.index'); })->middleware(['auth', 'role:owner,manager'])->name('transactions');
+
+// UC-13, UC-14, UC-16: Laporan & Alert Stok — Owner, Manager
+Route::get('/reports', function () { return view('reports.index'); })->middleware(['auth', 'role:owner,manager'])->name('reports');
+
+// UC-03: Kelola Karyawan — Owner, Manager
+Route::get('/employees', function () { return view('employees.index'); })->middleware(['auth', 'role:owner,manager'])->name('employees');
+
+// UC-02: Kelola Cabang — Owner only
+use App\Http\Controllers\BranchController;
+Route::resource('branches', BranchController::class)->except(['show'])->middleware(['auth', 'role:owner']);
+
+// Pelanggan — Owner, Manager
+Route::get('/customers', function () { return view('customers.index'); })->middleware(['auth', 'role:owner,manager'])->name('customers');
+
+// UC-15: Audit Log — Owner only
+Route::get('/audit-log', function () { return view('audit-log.index'); })->middleware(['auth', 'role:owner'])->name('audit-log');
+
+// UC-02, UC-04: Pengaturan — Owner only
+Route::get('/settings', function () { return view('settings.index'); })->middleware(['auth', 'role:owner'])->name('settings');
 
 require __DIR__.'/auth.php';

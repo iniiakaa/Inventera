@@ -41,7 +41,7 @@ class PosController extends Controller
             ];
         });
 
-        return view('pos', compact('categories', 'inventoryData'));
+        return view('pos.index', compact('categories', 'inventoryData'));
     }
 
     public function store(Request $request)

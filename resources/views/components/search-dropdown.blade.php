@@ -209,7 +209,7 @@
         { label: 'Transaksi',  desc: 'Daftar transaksi & POS',           icon: 'point_of_sale', color: 'rgba(0,88,188,0.1)',   textColor: 'text-primary',   route: '{{ route("transactions") }}' },
         { label: 'Inventaris', desc: 'Cek stok & barang masuk',          icon: 'inventory_2',   color: 'rgba(158,61,0,0.1)',   textColor: 'text-tertiary',  route: '{{ route("inventory") }}' },
         { label: 'Karyawan',   desc: 'Manajemen SDM per cabang',         icon: 'badge',         color: 'rgba(0,88,188,0.08)', textColor: 'text-primary',   route: '{{ route("employees") }}' },
-        { label: 'Cabang',     desc: '5 lokasi mini-market Jayusman',    icon: 'store',         color: 'rgba(0,110,40,0.1)',   textColor: 'text-secondary', route: '{{ route("branches") }}' },
+        { label: 'Cabang',     desc: '5 lokasi mini-market Jayusman',    icon: 'store',         color: 'rgba(0,110,40,0.1)',   textColor: 'text-secondary', route: '{{ route("branches.index") }}' },
         { label: 'Pelanggan',  desc: 'Daftar pelanggan terdaftar',       icon: 'group',         color: 'rgba(158,61,0,0.08)', textColor: 'text-tertiary',  route: '{{ route("customers") }}' },
         { label: 'Laporan',    desc: 'Omzet, laba & performa cabang',    icon: 'assessment',    color: 'rgba(0,110,40,0.1)',   textColor: 'text-secondary', route: '{{ route("reports") }}' },
         { label: 'Audit Log',  desc: 'Riwayat aktivitas sistem',         icon: 'manage_history',color: 'rgba(186,26,26,0.1)', textColor: 'text-error',     route: '{{ route("audit-log") }}' },

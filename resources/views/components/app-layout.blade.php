@@ -34,14 +34,14 @@
 
     <div class="flex min-h-screen w-full">
         <!-- Sidebar -->
-        @include('components.liquid.sidebar')
+        <x-sidebar />
 
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col min-w-0 md:pl-[344px]">
             <!-- Page Content -->
             <main class="flex-1 p-4 md:p-12 pt-24 md:pt-12 w-full max-w-container-max mx-auto">
                 <!-- Topbar -->
-                @include('components.liquid.topbar')
+                <x-topbar />
 
                 {{ $slot }}
             </main>

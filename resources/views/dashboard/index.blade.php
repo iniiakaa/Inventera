@@ -1,4 +1,4 @@
-<x-liquid-layout>
+<x-app-layout>
     <x-slot name="title">Store Overview</x-slot>
 
     <div class="space-y-8">
@@ -195,4 +195,4 @@
             }
         });
     </script>
-</x-liquid-layout>
+</x-app-layout>
