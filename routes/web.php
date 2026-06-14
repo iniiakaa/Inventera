@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\EmployeeController; // <-- Ditambahkan di sini
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -11,8 +13,6 @@ Route::get('/', function () {
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'role:owner,manager,supervisor'])
     ->name('dashboard');
-
-use App\Http\Controllers\PosController;
 
 // UC-09, UC-10, UC-11: POS — Kasir only
 Route::get('/pos', [PosController::class, 'index'])->middleware(['auth', 'role:cashier'])->name('pos');
@@ -30,10 +30,15 @@ Route::get('/transactions', function () { return view('transactions.index'); })-
 Route::get('/reports', function () { return view('reports.index'); })->middleware(['auth', 'role:owner,manager'])->name('reports');
 
 // UC-03: Kelola Karyawan — Owner, Manager
-Route::get('/employees', function () { return view('employees.index'); })->middleware(['auth', 'role:owner,manager'])->name('employees');
+// Tambahkan ->names() di bawah resource-nya
+Route::resource('employees', EmployeeController::class)
+    ->except(['show'])
+    ->names([
+        'index' => 'employees' // Ini triknya! Biar nama 'employees' lama tetep dikenali sebagai halaman utama karyawan
+    ])
+    ->middleware(['auth', 'role:owner,manager']);
 
 // UC-02: Kelola Cabang — Owner only
-use App\Http\Controllers\BranchController;
 Route::resource('branches', BranchController::class)->except(['show'])->middleware(['auth', 'role:owner']);
 
 // Pelanggan — Owner, Manager
