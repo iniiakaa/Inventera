@@ -20,6 +20,12 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="mb-6 p-4 bg-red-100 text-red-800 rounded-lg font-body-md">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <section class="liquid-glass rounded-xl overflow-hidden bg-white shadow-sm border border-gray-100">
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -45,7 +51,6 @@
                             </td>
                             <td class="p-4 text-gray-600">{{ $employee->branch->name ?? 'Tidak Ada Cabang' }}</td>
                             
-                            {{-- Perbaikan Pengecekan Status Menggunakan Loose Comparison --}}
                             <td class="p-4">
                                 @if($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true)
                                     <span class="px-2.5 py-1 text-xs font-semibold rounded-full bg-green-50 text-green-700">
@@ -60,17 +65,28 @@
 
                             <td class="p-4">
                                 <div class="flex items-center justify-center space-x-3">
+                                    {{-- Tombol Edit Detail --}}
                                     <a href="{{ route('employees.edit', $employee->id) }}" class="text-primary hover:text-opacity-80 p-1 flex items-center" title="Edit">
                                         <span class="material-symbols-outlined text-[20px]">edit</span>
                                     </a>
                                     
-                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengubah status aktif karyawan ini?')" class="inline">
+                                    {{-- Tombol Toggle Aktif/Nonaktif Cepat (Ganti ke route toggleStatus PATCH) --}}
+                                    <form action="{{ route('employees.toggle-status', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengubah status aktif karyawan ini?')" class="inline">
                                         @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'text-red-600' : 'text-green-600' }} hover:text-opacity-80 p-1 flex items-center" title="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                        @method('PATCH')
+                                        <button type="submit" class="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'text-yellow-600' : 'text-green-600' }} hover:text-opacity-80 p-1 flex items-center" title="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'Nonaktifkan' : 'Aktifkan' }}">
                                             <span class="material-symbols-outlined text-[20px]">
                                                 {{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'block' : 'check_circle' }}
                                             </span>
+                                        </button>
+                                    </form>
+
+                                    {{-- Tombol Drop / Hapus Permanen murni (Gunakan method DELETE ke resource destroy) --}}
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENGHAPUS PERMANEN karyawan ini? Data yang dihapus tidak bisa dikembalikan.')" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-600 hover:text-opacity-80 p-1 flex items-center" title="Hapus Permanen">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
                                         </button>
                                     </form>
                                 </div>
