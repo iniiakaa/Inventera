@@ -100,7 +100,8 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="p-12 text-center text-gray-400 font-body-md">
+                            {{-- DISESUAIKAN: Mengubah colspan menjadi 7 agar sejajar dengan jumlah kolom --}}
+                            <td colspan="7" class="p-12 text-center text-gray-400 font-body-md">
                                 <span class="material-symbols-outlined text-[48px] block mb-2 text-gray-300">badge</span>
                                 Belum ada data karyawan.
                             </td>
