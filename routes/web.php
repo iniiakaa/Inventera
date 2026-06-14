@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\BranchController;
-use App\Http\Controllers\EmployeeController; // <-- Ditambahkan di sini
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,14 +29,24 @@ Route::get('/transactions', function () { return view('transactions.index'); })-
 // UC-13, UC-14, UC-16: Laporan & Alert Stok — Owner, Manager
 Route::get('/reports', function () { return view('reports.index'); })->middleware(['auth', 'role:owner,manager'])->name('reports');
 
+
+// ==========================================
 // UC-03: Kelola Karyawan — Owner, Manager
-// Tambahkan ->names() di bawah resource-nya
+// ==========================================
+
+// 1. Route tambahan untuk toggle status aktif/nonaktif cepat dari tabel
+Route::patch('/employees/{id}/toggle-status', [EmployeeController::class, 'toggleStatus'])
+    ->middleware(['auth', 'role:owner,manager'])
+    ->name('employees.toggle-status');
+
+// 2. Resource route (Meng-handle index, create, store, edit, update, dan destroy/drop murni)
 Route::resource('employees', EmployeeController::class)
     ->except(['show'])
     ->names([
-        'index' => 'employees' // Ini triknya! Biar nama 'employees' lama tetep dikenali sebagai halaman utama karyawan
+        'index' => 'employees' // Trik nama 'employees' agar link lama tidak patah
     ])
     ->middleware(['auth', 'role:owner,manager']);
+
 
 // UC-02: Kelola Cabang — Owner only
 Route::resource('branches', BranchController::class)->except(['show'])->middleware(['auth', 'role:owner']);
