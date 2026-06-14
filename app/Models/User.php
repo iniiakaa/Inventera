@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'role',
         'branch_id',
+        'is_active', // Ditambahkan agar bisa di-update via mass assignment
     ];
 
     /**
@@ -50,6 +51,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password'          => 'hashed',
+            'is_active'         => 'boolean', // Ditambahkan agar 1/0 otomatis jadi true/false
         ];
     }
 
@@ -84,6 +86,7 @@ class User extends Authenticatable
     {
         return $this->role === 'cashier';
     }
+    
     /**
      * Cek apakah user adalah supervisor.
      */
