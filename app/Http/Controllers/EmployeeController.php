@@ -74,6 +74,7 @@ class EmployeeController extends Controller
             'role' => 'required|string|in:owner,manager,supervisor,warehouse,cashier',
             'branch_id' => 'nullable|exists:branches,id',
             'phone' => 'nullable|string|max:20',
+            'is_active' => 'required|boolean', // Menambahkan validasi boolean untuk dropdown status akun
         ]);
 
         if ($request->filled('password')) {
@@ -81,17 +82,32 @@ class EmployeeController extends Controller
             $validated['password'] = bcrypt($request->password);
         }
 
-        $validated['is_active'] = $request->has('is_active');
-
         $employee->update($validated);
 
         return redirect()->route('employees')->with('success', 'Data karyawan berhasil diperbarui.');
     }
 
     /**
-     * Remove the specified resource from storage (Toggle Soft Deactivate).
+     * Remove the specified resource from storage (Drop / Hapus Permanen).
      */
     public function destroy($id)
+    {
+        $employee = User::findOrFail($id);
+        
+        // Proteksi: Jangan sampai menghapus diri sendiri yang sedang login
+        if (auth()->id() == $employee->id) {
+            return redirect()->route('employees')->with('error', 'Anda tidak bisa menghapus akun Anda sendiri yang sedang digunakan.');
+        }
+
+        $employee->delete(); // Menghapus data permanen dari database
+
+        return redirect()->route('employees')->with('success', 'Data karyawan berhasil dihapus secara permanen.');
+    }
+
+    /**
+     * Toggle status aktif / nonaktif karyawan tanpa hapus data.
+     */
+    public function toggleStatus($id)
     {
         $employee = User::findOrFail($id);
         
