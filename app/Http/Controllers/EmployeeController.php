@@ -126,7 +126,11 @@ class EmployeeController extends Controller
             'role' => 'required|string|in:' . $allowedRoles,
             'branch_id' => 'nullable|exists:branches,id',
             'phone' => 'nullable|string|max:20',
+<<<<<<< HEAD
             'is_active' => 'required|boolean',
+=======
+            'is_active' => 'required|boolean', // Menambahkan validasi boolean untuk dropdown status akun
+>>>>>>> upstream/main
         ]);
 
         if ($request->filled('password')) {
@@ -134,28 +138,58 @@ class EmployeeController extends Controller
             $validated['password'] = bcrypt($request->password);
         }
 
+<<<<<<< HEAD
         // FORCE BRANCH pada update: Pastikan branch_id tidak berubah
         if ($user->role === 'manager') {
             $validated['branch_id'] = $user->branch_id;
         }
 
+=======
+>>>>>>> upstream/main
         $employee->update($validated);
 
         return redirect()->route('employees')->with('success', 'Data karyawan diperbarui.');
     }
 
     /**
+<<<<<<< HEAD
      * Remove the specified resource from storage.
+=======
+     * Remove the specified resource from storage (Drop / Hapus Permanen).
+>>>>>>> upstream/main
      */
     public function destroy($id)
     {
         $user = auth()->user();
         $employee = User::findOrFail($id);
         
+<<<<<<< HEAD
         // Proteksi: Manajer tidak boleh hapus karyawan cabang lain
         if ($user->role === 'manager' && $employee->branch_id !== $user->branch_id) {
              return redirect()->route('employees')->with('error', 'Akses ditolak.');
         }
+=======
+        // Proteksi: Jangan sampai menghapus diri sendiri yang sedang login
+        if (auth()->id() == $employee->id) {
+            return redirect()->route('employees')->with('error', 'Anda tidak bisa menghapus akun Anda sendiri yang sedang digunakan.');
+        }
+
+        $employee->delete(); // Menghapus data permanen dari database
+
+        return redirect()->route('employees')->with('success', 'Data karyawan berhasil dihapus secara permanen.');
+    }
+
+    /**
+     * Toggle status aktif / nonaktif karyawan tanpa hapus data.
+     */
+    public function toggleStatus($id)
+    {
+        $employee = User::findOrFail($id);
+        
+        // Mengubah status secara dinamis: jika aktif jadi nonaktif, jika nonaktif jadi aktif
+        $newStatus = !$employee->is_active;
+        $employee->update(['is_active' => $newStatus]);
+>>>>>>> upstream/main
 
         if ($user->role === 'manager' && in_array($employee->role, ['owner', 'manager', 'supervisor'])) {
             return redirect()->route('employees')->with('error', 'Anda tidak memiliki hak akses.');
