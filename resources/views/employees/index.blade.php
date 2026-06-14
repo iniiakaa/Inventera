@@ -1,5 +1,6 @@
 @php 
-    $role = Auth::user()->role ?? ''; 
+    $userLogin = Auth::user();
+    $roleLogin = $userLogin->role ?? ''; 
 @endphp
 
 <x-layouts.admin active="employees" title="Karyawan - Inventera">
@@ -65,30 +66,35 @@
 
                             <td class="p-4">
                                 <div class="flex items-center justify-center space-x-3">
-                                    {{-- Tombol Edit Detail --}}
-                                    <a href="{{ route('employees.edit', $employee->id) }}" class="text-primary hover:text-opacity-80 p-1 flex items-center" title="Edit">
-                                        <span class="material-symbols-outlined text-[20px]">edit</span>
-                                    </a>
-                                    
-                                    {{-- Tombol Toggle Aktif/Nonaktif Cepat (Ganti ke route toggleStatus PATCH) --}}
-                                    <form action="{{ route('employees.toggle-status', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengubah status aktif karyawan ini?')" class="inline">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" class="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'text-yellow-600' : 'text-green-600' }} hover:text-opacity-80 p-1 flex items-center" title="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                            <span class="material-symbols-outlined text-[20px]">
-                                                {{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'block' : 'check_circle' }}
-                                            </span>
-                                        </button>
-                                    </form>
+                                    @if($roleLogin === 'manager' && in_array($employee->role, ['owner', 'manager', 'supervisor']))
+                                        {{-- Jika yang login Manager, kunci aksi untuk akun di atasnya / sesamanya --}}
+                                        <span class="text-gray-400 text-xs italic">Dinkunci oleh Sistem</span>
+                                    @else
+                                        {{-- Tombol Edit Detail --}}
+                                        <a href="{{ route('employees.edit', $employee->id) }}" class="text-primary hover:text-opacity-80 p-1 flex items-center" title="Edit">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </a>
+                                        
+                                        {{-- Tombol Toggle Aktif/Nonaktif Cepat --}}
+                                        <form action="{{ route('employees.toggle-status', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin mengubah status aktif karyawan ini?')" class="inline">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit" class="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'text-yellow-600' : 'text-green-600' }} hover:text-opacity-80 p-1 flex items-center" title="{{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                                <span class="material-symbols-outlined text-[20px]">
+                                                    {{ ($employee->is_active == 1 || $employee->is_active == '1' || $employee->is_active == true) ? 'block' : 'check_circle' }}
+                                                </span>
+                                            </button>
+                                        </form>
 
-                                    {{-- Tombol Drop / Hapus Permanen murni (Gunakan method DELETE ke resource destroy) --}}
-                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENGHAPUS PERMANEN karyawan ini? Data yang dihapus tidak bisa dikembalikan.')" class="inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-opacity-80 p-1 flex items-center" title="Hapus Permanen">
-                                            <span class="material-symbols-outlined text-[20px]">delete</span>
-                                        </button>
-                                    </form>
+                                        {{-- Tombol Drop / Hapus Permanen --}}
+                                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin MENGHAPUS PERMANEN karyawan ini? Data yang dihapus tidak bisa dikembalikan.')" class="inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-opacity-80 p-1 flex items-center" title="Hapus Permanen">
+                                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

@@ -5,7 +5,7 @@ namespace App\View\Components\Layouts;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
-class Retail extends Component
+class Admin extends Component // <-- Pastikan ini tertulis Admin
 {
     public function render(): View
     {
