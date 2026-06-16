@@ -3,32 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Branch;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class BranchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Middleware proteksi: Hanya Owner yang bisa akses selain index
+    private function checkOwner() {
+        if (Auth::user()->role !== 'owner') {
+            return redirect()->route('branches.index')->with('error', 'Akses ditolak.');
+        }
+        return null;
+    }
+
     public function index()
     {
         $branches = Branch::orderBy('name')->get();
         return view('branches.index', compact('branches'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
+        $this->checkOwner();
         return view('branches.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $this->checkOwner();
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:10|unique:branches,code',
@@ -36,29 +42,47 @@ class BranchController extends Controller
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
             'manager_name' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
+            'manager_email' => 'required|email|unique:users,email',
+            'manager_password' => 'required|min:8',
+            'is_active' => 'nullable',
         ]);
 
-        $validated['is_active'] = $request->has('is_active');
+        DB::transaction(function () use ($request, $validated) {
+            // 1. Buat Cabang
+            $branch = Branch::create([
+                'name' => $validated['name'],
+                'code' => $validated['code'],
+                'city' => $validated['city'],
+                'address' => $validated['address'],
+                'phone' => $validated['phone'],
+                'manager_name' => $validated['manager_name'],
+                'is_active' => $request->has('is_active'),
+            ]);
 
-        Branch::create($validated);
+            // 2. Buat Akun Manager
+            User::create([
+                'name' => $validated['manager_name'] ?? 'Manager ' . $validated['name'],
+                'email' => $validated['manager_email'],
+                'password' => Hash::make($validated['manager_password']),
+                'role' => 'manager',
+                'branch_id' => $branch->id,
+                'is_active' => true,
+            ]);
+        });
 
-        return redirect()->route('branches.index')->with('success', 'Cabang berhasil ditambahkan.');
+        return redirect()->route('branches.index')->with('success', 'Cabang dan Akun Manajer berhasil dibuat.');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Branch $branch)
     {
+        $this->checkOwner();
         return view('branches.edit', compact('branch'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Branch $branch)
     {
+        $this->checkOwner();
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:10|unique:branches,code,' . $branch->id,
@@ -66,24 +90,19 @@ class BranchController extends Controller
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
             'manager_name' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable',
         ]);
 
         $validated['is_active'] = $request->has('is_active');
-
         $branch->update($validated);
 
         return redirect()->route('branches.index')->with('success', 'Data cabang berhasil diperbarui.');
     }
 
-    /**
-     * Soft delete / deactivate the specified resource.
-     */
     public function destroy(Branch $branch)
     {
-        // Set is_active to false instead of deleting from DB to preserve related records
+        $this->checkOwner();
         $branch->update(['is_active' => false]);
-        
         return redirect()->route('branches.index')->with('success', 'Cabang berhasil dinonaktifkan.');
     }
 }
