@@ -95,8 +95,11 @@ class PosController extends Controller
             // 2. Buat Transaksi
             $transaction = Transaction::create([
                 'branch_id' => $branchId,
-                'cashier_id' => Auth::id(),
+                'user_id' => Auth::id(),
                 'invoice_number' => 'INV-' . date('Ymd') . '-' . strtoupper(uniqid()),
+                'subtotal' => $totalAmount,
+                'discount_amount' => 0,
+                'tax_amount' => 0,
                 'total_amount' => $totalAmount,
                 'amount_paid' => $request->amount_paid,
                 'change_amount' => $request->amount_paid - $totalAmount,
@@ -110,7 +113,7 @@ class PosController extends Controller
                     'transaction_id' => $transaction->id,
                     'product_id' => $data['inventory']->product_id,
                     'quantity' => $data['quantity'],
-                    'price' => $data['price'],
+                    'unit_price' => $data['price'],
                     'subtotal' => $data['subtotal']
                 ]);
 

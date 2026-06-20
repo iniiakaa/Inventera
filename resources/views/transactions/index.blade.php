@@ -1,134 +1,161 @@
-<x-layouts.admin active="transactions" title="Transactions - Jayusman Retail Management">
-    <!-- Page Header -->
-    <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 mt-8 md:mt-0">
-        <div>
-            <p class="font-body-lg text-body-lg text-on-surface-variant mb-2">Financial Ledger</p>
-            <h2 class="font-display text-display text-on-surface hidden md:block">Transactions</h2>
-            <h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface md:hidden">Transactions</h2>
-        </div>
-        <div class="flex items-center space-x-3">
-            <button class="px-5 py-2.5 liquid-glass rounded-full font-label-md text-label-md text-on-surface hover:bg-white/60 transition-all flex items-center space-x-2">
-                <span class="material-symbols-outlined text-[18px]">download</span>
-                <span>Export CSV</span>
-            </button>
-            <button class="px-5 py-2.5 bg-primary text-on-primary rounded-full font-label-md text-label-md shadow-[0_8px_16px_rgba(0,88,188,0.3)] hover:opacity-90 transition-all flex items-center space-x-2">
-                <span class="material-symbols-outlined text-[18px]">filter_alt</span>
-                <span>Advanced Filters</span>
-            </button>
-        </div>
-    </header>
+<x-layouts.admin active="transactions" title="Transaksi - Inventera">
+ <!-- Header -->
+ <header class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 mt-8 md:mt-0">
+ <div>
+ <p class="font-body-lg text-body-lg text-on-surface-variant mb-2">Rekap Penjualan</p>
+ <h2 class="font-display text-display text-on-surface">Transaksi</h2>
+ </div>
+ </header>
 
-    <!-- Chart & Volume Row -->
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
-        <!-- Cash Flow Chart -->
-        <section class="xl:col-span-2 liquid-glass rounded-xl p-8 flex flex-col">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h3 class="font-headline-md text-headline-md text-on-surface">Cash Flow Overview</h3>
-                    <p class="font-body-md text-body-md text-on-surface-variant">Weekly transaction activity</p>
-                </div>
-                <div class="flex bg-white/30 rounded-full p-1 border border-white/40">
-                    <button class="px-4 py-1.5 rounded-full bg-white text-primary font-label-sm text-label-sm shadow-sm">7D</button>
-                    <button class="px-4 py-1.5 rounded-full text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm">30D</button>
-                </div>
-            </div>
-            <!-- Bar Chart Visual -->
-            <div class="flex-1 flex items-end gap-3 h-40 mt-4">
-                @php $bars = [40, 70, 55, 90, 60, 75, 45]; $days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']; @endphp
-                @foreach($bars as $i => $h)
-                <div class="flex-1 flex flex-col items-center gap-2">
-                    <div class="w-full rounded-t-lg bg-gradient-to-t from-primary to-primary/40" style="height: {{ $h }}%;"></div>
-                    <span class="font-label-sm text-label-sm text-on-surface-variant">{{ $days[$i] }}</span>
-                </div>
-                @endforeach
-            </div>
-        </section>
+ <!-- Summary Cards -->
+ <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+ <div class="liquid-glass rounded-xl p-6 flex items-center gap-4">
+ <div class="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+ <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1;">payments</span>
+ </div>
+ <div>
+ <p class="font-body-sm text-body-sm text-on-surface-variant mb-0.5">Total Pendapatan (Bulan Ini)</p>
+ <p class="font-headline-md text-headline-md font-bold text-on-surface">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+ </div>
+ </div>
+ <div class="liquid-glass rounded-xl p-6 flex items-center gap-4">
+ <div class="w-12 h-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center flex-shrink-0">
+ <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1;">receipt_long</span>
+ </div>
+ <div>
+ <p class="font-body-sm text-body-sm text-on-surface-variant mb-0.5">Jumlah Transaksi (Bulan Ini)</p>
+ <p class="font-headline-md text-headline-md font-bold text-on-surface">{{ number_format($totalTrx, 0, ',', '.') }}</p>
+ </div>
+ </div>
+ <div class="liquid-glass rounded-xl p-6 flex items-center gap-4">
+ <div class="w-12 h-12 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center flex-shrink-0">
+ <span class="material-symbols-outlined text-[24px]" style="font-variation-settings:'FILL' 1;">trending_up</span>
+ </div>
+ <div>
+ <p class="font-body-sm text-body-sm text-on-surface-variant mb-0.5">Rata-rata per Transaksi</p>
+ <p class="font-headline-md text-headline-md font-bold text-on-surface">Rp {{ number_format($avgTrx, 0, ',', '.') }}</p>
+ </div>
+ </div>
+ </div>
 
-        <!-- Monthly Volume -->
-        <section class="liquid-glass rounded-xl p-8 flex flex-col justify-between">
-            <div>
-                <span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1.5 rounded-full">Monthly Volume</span>
-                <p class="font-display text-display text-on-surface mt-4">Rp 1.2M</p>
-                <p class="font-body-md text-body-md text-secondary mt-2 flex items-center">
-                    <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span>
-                    +14.2% from last month
-                </p>
-            </div>
-            <div class="pt-6 border-t border-white/20">
-                <p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Next Settlement</p>
-                <p class="font-body-md text-body-md text-on-surface mt-1">May 05, 2026 • 23:59 WIB</p>
-            </div>
-        </section>
-    </div>
+ <!-- Filter Bar -->
+ <form action="{{ route('transactions') }}" method="GET" class="flex flex-wrap gap-3 mb-6 items-center">
+ 
+ @if($user->role === 'owner' && $branches->count())
+ <x-select wrapperClass="w-auto" name="branch_id" class="px-4 py-2.5 border border-gray-200 font-body-md text-gray-700 min-w-[180px] rounded-full outline-none focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all shadow-sm" style="background: rgba(255,255,255,0.35); backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); border: 1px solid rgba(255,255,255,0.6);">
+ <option value="">Semua Cabang</option>
+ @foreach($branches as $branch)
+ <option value="{{ $branch->id }}" {{ request('branch_id') == $branch->id ? 'selected' : '' }}>{{ $branch->name }}</option>
+ @endforeach
+ </x-select>
+ @endif
 
-    <!-- Transaction History Table -->
-    <section class="liquid-glass rounded-xl overflow-hidden">
-        <div class="flex items-center justify-between p-6 border-b border-white/20">
-            <h3 class="font-headline-md text-headline-md text-on-surface">Transaction History</h3>
-            <p class="font-label-sm text-label-sm text-on-surface-variant">Showing 2,401 operations</p>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="bg-white/10">
-                        <th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Transaction Source</th>
-                        <th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-center">Amount</th>
-                        <th class="px-6 py-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider text-right">Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-white/10">
-                    <tr class="hover:bg-white/10 transition-colors cursor-pointer">
-                        <td class="px-6 py-5">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
-                                </div>
-                                <div>
-                                    <p class="font-label-md text-label-md text-on-surface">Merchant Payment: PT Tokopedia</p>
-                                    <p class="font-label-sm text-label-sm text-on-surface-variant">ID: TXN-99201-BETA</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-5">
-                            <span class="bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-3 py-1 rounded-full">Cleared</span>
-                        </td>
-                        <td class="px-6 py-5 text-center font-label-md text-label-md text-on-surface">-Rp 21.3jt</td>
-                        <td class="px-6 py-5 text-right font-label-sm text-label-sm text-on-surface-variant">20:34:11</td>
-                    </tr>
-                    <tr class="hover:bg-white/10 transition-colors cursor-pointer">
-                        <td class="px-6 py-5">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-9 h-9 rounded-xl bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
-                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">payments</span>
-                                </div>
-                                <div>
-                                    <p class="font-label-md text-label-md text-on-surface">Incoming Wire: PT Sinar Plastik</p>
-                                    <p class="font-label-sm text-label-sm text-on-surface-variant">ID: TXN-00219-WIRE</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-5">
-                            <span class="bg-error-container text-error font-label-sm text-label-sm px-3 py-1 rounded-full">Pending</span>
-                        </td>
-                        <td class="px-6 py-5 text-center font-label-md text-label-md text-secondary">+Rp 187.5jt</td>
-                        <td class="px-6 py-5 text-right font-label-sm text-label-sm text-on-surface-variant">19:42:01</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- Pagination -->
-        <div class="flex justify-center items-center gap-2 p-6 border-t border-white/20">
-            <button class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
-                <span class="material-symbols-outlined text-[16px]">chevron_left</span>
-            </button>
-            <span class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-md text-label-md">1</span>
-            <span class="w-8 h-8 rounded-full flex items-center justify-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface cursor-pointer">2</span>
-            <span class="w-8 h-8 rounded-full flex items-center justify-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface cursor-pointer">3</span>
-            <button class="w-8 h-8 rounded-full liquid-glass flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
-                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
-            </button>
-        </div>
-    </section>
-    <div class="pb-12"></div>
+ <x-select wrapperClass="w-auto" name="status" class="px-4 py-2.5 border border-gray-200 font-body-md text-gray-700 rounded-full outline-none focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all shadow-sm" style="background: rgba(255,255,255,0.35); backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); border: 1px solid rgba(255,255,255,0.6);">
+ <option value="">Semua Status</option>
+ <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Selesai</option>
+ <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+ <option value="cancelled" {{ request('status') === 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+ <option value="refunded" {{ request('status') === 'refunded' ? 'selected' : '' }}>Refund</option>
+ </x-select>
+
+ <x-select wrapperClass="w-auto" name="payment_method" class="px-4 py-2.5 border border-gray-200 font-body-md text-gray-700 rounded-full outline-none focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all shadow-sm" style="background: rgba(255,255,255,0.35); backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); border: 1px solid rgba(255,255,255,0.6);">
+ <option value="">Semua Metode</option>
+ <option value="cash" {{ request('payment_method') === 'cash' ? 'selected' : '' }}>Tunai</option>
+ <option value="debit" {{ request('payment_method') === 'debit' ? 'selected' : '' }}>Debit</option>
+ <option value="credit" {{ request('payment_method') === 'credit' ? 'selected' : '' }}>Kredit</option>
+ <option value="qris" {{ request('payment_method') === 'qris' ? 'selected' : '' }}>QRIS</option>
+ <option value="transfer" {{ request('payment_method') === 'transfer' ? 'selected' : '' }}>Transfer</option>
+ </x-select>
+
+ <input type="date" name="date_from" value="{{ request('date_from') }}" placeholder="Tanggal Awal"
+ class="px-4 py-2.5 rounded-full font-body-md text-on-surface-variant outline-none focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all shadow-sm cursor-pointer" style="background: rgba(255,255,255,0.35); backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); border: 1px solid rgba(255,255,255,0.6);">
+ <input type="date" name="date_to" value="{{ request('date_to') }}" placeholder="Tanggal Akhir"
+ class="px-4 py-2.5 rounded-full font-body-md text-on-surface-variant outline-none focus:ring-2 focus:ring-primary/40 focus:border-transparent transition-all shadow-sm cursor-pointer" style="background: rgba(255,255,255,0.35); backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); border: 1px solid rgba(255,255,255,0.6);">
+
+ <button type="submit" class="px-5 py-2.5 bg-gray-800 text-white rounded-xl font-label-md hover:bg-gray-700 transition-colors">Filter</button>
+
+ @if(request()->anyFilled(['branch_id','status','payment_method','date_from','date_to']))
+ <a href="{{ route('transactions') }}" class="px-5 py-2.5 bg-red-50 text-red-600 border border-red-200 rounded-xl font-label-md hover:bg-red-100 transition-colors">Reset</a>
+ @endif
+ </form>
+
+ <!-- Transaction Table -->
+ <section class="liquid-glass rounded-xl overflow-hidden">
+ <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+ <h3 class="font-headline-md text-headline-md text-on-surface">Riwayat Transaksi</h3>
+ <p class="font-label-sm text-label-sm text-on-surface-variant">{{ $transactions->total() }} transaksi ditemukan</p>
+ </div>
+
+ <div class="overflow-x-auto">
+ <table class="w-full text-left border-collapse">
+ <thead>
+ <tr class="bg-gray-50/60 border-b border-gray-100">
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider">No. Invoice</th>
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider">Kasir</th>
+ @if($user->role === 'owner')
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider">Cabang</th>
+ @endif
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider text-center">Metode</th>
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider text-right">Total</th>
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider text-center">Status</th>
+ <th class="px-6 py-4 font-label-sm text-gray-500 uppercase tracking-wider text-right">Waktu</th>
+ </tr>
+ </thead>
+ <tbody class="divide-y divide-gray-50 font-body-md text-gray-800">
+ @forelse($transactions as $trx)
+ <tr class="hover:bg-gray-50/60 transition-colors">
+ <td class="px-6 py-4">
+ <p class="font-medium text-primary">{{ $trx->invoice_number }}</p>
+ <p class="text-xs text-gray-400 mt-0.5">{{ $trx->items->count() }} item</p>
+ </td>
+ <td class="px-6 py-4 text-gray-600">{{ $trx->user->name ?? '-' }}</td>
+ @if($user->role === 'owner')
+ <td class="px-6 py-4 text-gray-600">{{ $trx->branch->name ?? '-' }}</td>
+ @endif
+ <td class="px-6 py-4 text-center">
+ @php
+ $methods = ['cash'=>'Tunai','debit'=>'Debit','credit'=>'Kredit','qris'=>'QRIS','transfer'=>'Transfer'];
+ $methodIcons = ['cash'=>'payments','debit'=>'credit_card','credit'=>'credit_score','qris'=>'qr_code_scanner','transfer'=>'account_balance'];
+ @endphp
+ <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 text-gray-700 font-label-sm text-[11px]">
+ <span class="material-symbols-outlined text-[13px]">{{ $methodIcons[$trx->payment_method] ?? 'payments' }}</span>
+ {{ $methods[$trx->payment_method] ?? $trx->payment_method }}
+ </span>
+ </td>
+ <td class="px-6 py-4 text-right font-medium">Rp {{ number_format($trx->total_amount, 0, ',', '.') }}</td>
+ <td class="px-6 py-4 text-center">
+ @php
+ $statusMap = [
+ 'completed' => ['label' => 'Selesai', 'class' => 'bg-green-100 text-green-700'],
+ 'pending' => ['label' => 'Pending', 'class' => 'bg-yellow-100 text-yellow-700'],
+ 'cancelled' => ['label' => 'Dibatalkan', 'class' => 'bg-red-100 text-red-600'],
+ 'refunded' => ['label' => 'Refund', 'class' => 'bg-orange-100 text-orange-700'],
+ ];
+ $st = $statusMap[$trx->status] ?? ['label' => $trx->status, 'class' => 'bg-gray-100 text-gray-700'];
+ @endphp
+ <span class="px-2.5 py-1 rounded-full font-label-sm text-[11px] {{ $st['class'] }}">{{ $st['label'] }}</span>
+ </td>
+ <td class="px-6 py-4 text-right text-gray-500 text-sm">
+ {{ \Carbon\Carbon::parse($trx->created_at)->format('d M Y') }}<br>
+ <span class="text-xs text-gray-400">{{ \Carbon\Carbon::parse($trx->created_at)->format('H:i') }}</span>
+ </td>
+ </tr>
+ @empty
+ <tr>
+ <td colspan="{{ $user->role === 'owner' ? 7 : 6 }}" class="px-6 py-16 text-center text-gray-400 font-body-md">
+ Belum ada transaksi yang sesuai filter.
+ </td>
+ </tr>
+ @endforelse
+ </tbody>
+ </table>
+ </div>
+
+ @if($transactions->hasPages())
+ <div class="px-6 py-4 border-t border-gray-100">
+ {{ $transactions->links() }}
+ </div>
+ @endif
+ </section>
+ <div class="pb-12"></div>
 </x-layouts.admin>

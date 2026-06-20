@@ -11,7 +11,7 @@ class EmployeeController extends Controller
 {
     // Helper untuk cek akses Read-Only
     private function isReadOnly($user) {
-        return in_array($user->role, ['owner', 'supervisor']);
+        return in_array($user->role, ['supervisor']);
     }
 
     public function index()
@@ -36,7 +36,7 @@ class EmployeeController extends Controller
         if ($this->isReadOnly($user)) return redirect()->route('employees')->with('error', 'Akses ditolak.');
         
         $branches = Branch::where('is_active', true)->orderBy('name')->get();
-        $roles = ($user->role === 'manager') ? ['warehouse', 'cashier'] : ['owner', 'manager', 'supervisor', 'warehouse', 'cashier'];
+        $roles = ($user->role === 'manager') ? ['supervisor', 'warehouse', 'cashier'] : ['owner', 'manager', 'supervisor', 'warehouse', 'cashier'];
 
         return view('employees.create', compact('branches', 'roles'));
     }
@@ -46,7 +46,7 @@ class EmployeeController extends Controller
         $user = Auth::user();
         if ($this->isReadOnly($user)) return redirect()->route('employees')->with('error', 'Akses ditolak.');
 
-        $allowedRoles = ($user->role === 'manager') ? 'warehouse,cashier' : 'owner,manager,supervisor,warehouse,cashier';
+        $allowedRoles = ($user->role === 'manager') ? 'supervisor,warehouse,cashier' : 'owner,manager,supervisor,warehouse,cashier';
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -76,10 +76,10 @@ class EmployeeController extends Controller
         if ($this->isReadOnly($user)) return redirect()->route('employees')->with('error', 'Akses ditolak.');
 
         if ($user->role === 'manager') {
-            if ($employee->branch_id !== $user->branch_id || !in_array($employee->role, ['warehouse', 'cashier'])) {
+            if ($employee->branch_id !== $user->branch_id || !in_array($employee->role, ['supervisor', 'warehouse', 'cashier'])) {
                 return redirect()->route('employees')->with('error', 'Anda tidak memiliki hak akses.');
             }
-            $roles = ['warehouse', 'cashier'];
+            $roles = ['supervisor', 'warehouse', 'cashier'];
         } else {
             $roles = ['owner', 'manager', 'supervisor', 'warehouse', 'cashier'];
         }
@@ -116,7 +116,7 @@ class EmployeeController extends Controller
         
         if ($this->isReadOnly($user)) return redirect()->route('employees')->with('error', 'Akses ditolak.');
 
-        if ($user->role === 'manager' && ($employee->branch_id !== $user->branch_id || in_array($employee->role, ['owner', 'manager', 'supervisor']))) {
+        if ($user->role === 'manager' && ($employee->branch_id !== $user->branch_id || in_array($employee->role, ['owner', 'manager']))) {
             return redirect()->route('employees')->with('error', 'Anda tidak memiliki hak akses.');
         }
 

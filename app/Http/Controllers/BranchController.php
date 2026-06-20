@@ -11,13 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class BranchController extends Controller
 {
-    // Middleware proteksi: Hanya Owner yang bisa akses selain index
-    private function checkOwner() {
-        if (Auth::user()->role !== 'owner') {
-            return redirect()->route('branches.index')->with('error', 'Akses ditolak.');
-        }
-        return null;
-    }
 
     public function index()
     {
@@ -27,14 +20,11 @@ class BranchController extends Controller
 
     public function create()
     {
-        $this->checkOwner();
         return view('branches.create');
     }
 
     public function store(Request $request)
     {
-        $this->checkOwner();
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:10|unique:branches,code',
@@ -75,14 +65,11 @@ class BranchController extends Controller
 
     public function edit(Branch $branch)
     {
-        $this->checkOwner();
         return view('branches.edit', compact('branch'));
     }
 
     public function update(Request $request, Branch $branch)
     {
-        $this->checkOwner();
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:10|unique:branches,code,' . $branch->id,
@@ -101,7 +88,6 @@ class BranchController extends Controller
 
     public function destroy(Branch $branch)
     {
-        $this->checkOwner();
         $branch->update(['is_active' => false]);
         return redirect()->route('branches.index')->with('success', 'Cabang berhasil dinonaktifkan.');
     }

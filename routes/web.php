@@ -5,6 +5,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -19,15 +27,29 @@ Route::get('/pos', [PosController::class, 'index'])->middleware(['auth', 'role:c
 Route::post('/pos/checkout', [PosController::class, 'store'])->middleware(['auth', 'role:cashier'])->name('pos.checkout');
 
 // UC-05, UC-06, UC-07, UC-08: Inventori & Gudang — Warehouse, Supervisor, Manager
-Route::get('/inventory', function () {
-    return view('inventory.index');
-})->middleware(['auth', 'role:warehouse,supervisor,manager'])->name('inventory');
+Route::resource('inventory', \App\Http\Controllers\InventoryController::class)->except(['show'])->middleware(['auth', 'role:owner,manager,supervisor,warehouse']);
+
+// Suppliers
+Route::resource('suppliers', SupplierController::class)->except(['show'])->middleware(['auth', 'role:owner,manager,warehouse']);
+
+// Purchase Orders (Inbound)
+Route::resource('purchase-orders', PurchaseOrderController::class)->except(['destroy'])->middleware(['auth', 'role:owner,manager,supervisor,warehouse']);
+
+// Stock Opname
+Route::resource('stock-opnames', StockOpnameController::class)->except(['destroy'])->middleware(['auth', 'role:owner,manager,supervisor,warehouse']);
 
 // UC-13: Laporan Transaksi — Owner, Manager
-Route::get('/transactions', function () { return view('transactions.index'); })->middleware(['auth', 'role:owner,manager'])->name('transactions');
+Route::get('/transactions', [TransactionController::class, 'index'])->middleware(['auth', 'role:owner,manager'])->name('transactions');
 
-// UC-13, UC-14, UC-16: Laporan & Alert Stok — Owner, Manager
-Route::get('/reports', function () { return view('reports.index'); })->middleware(['auth', 'role:owner,manager'])->name('reports');
+// UC-13, UC-14, UC-16:// Laporan & Analitik — Owner, Manager
+Route::middleware(['auth', 'role:owner,manager'])->group(function () {
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::post('/reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
+    Route::post('/reports/stocks', [ReportController::class, 'stocks'])->name('reports.stocks');
+});
+
+// Audit Trail / Activity Logs — Owner
+Route::get('/activity-logs', [ActivityLogController::class, 'index'])->middleware(['auth', 'role:owner'])->name('activity-logs.index');
 
 
 // ==========================================
@@ -50,6 +72,10 @@ Route::resource('employees', EmployeeController::class)
 
 // UC-02: Kelola Cabang — Owner only
 Route::resource('branches', BranchController::class)->except(['show'])->middleware(['auth', 'role:owner']);
+
+// Master Data: Kategori & Produk — Owner, Manager, Supervisor, Warehouse
+Route::resource('categories', CategoryController::class)->except(['show'])->middleware(['auth', 'role:owner,manager,supervisor,warehouse']);
+Route::resource('products', ProductController::class)->except(['show'])->middleware(['auth', 'role:owner,manager,supervisor,warehouse']);
 
 // Pelanggan — Owner, Manager
 Route::get('/customers', function () { return view('customers.index'); })->middleware(['auth', 'role:owner,manager'])->name('customers');

@@ -52,7 +52,7 @@ class AuthenticatedSessionController extends Controller
         if (in_array($role, ['owner', 'manager', 'supervisor'])) {
             return redirect()->intended(route('dashboard', absolute: false));
         } elseif ($role === 'warehouse') {
-            return redirect()->intended(route('inventory', absolute: false));
+            return redirect()->intended(route('inventory.index', absolute: false));
         }
 
         return redirect()->intended(route('pos', absolute: false));
